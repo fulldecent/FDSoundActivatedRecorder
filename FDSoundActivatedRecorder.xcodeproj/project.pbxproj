@@ -22,6 +22,8 @@
 		D9E948231867AF1C008CAA73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E948021867AF1C008CAA73 /* UIKit.framework */; };
 		D9E9482B1867AF1C008CAA73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9E948291867AF1C008CAA73 /* InfoPlist.strings */; };
 		D9E9482D1867AF1C008CAA73 /* FDSoundActivatedRecorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E9482C1867AF1C008CAA73 /* FDSoundActivatedRecorderTests.m */; };
+		D9E9483B1867AF67008CAA73 /* FDSoundActivatedRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E9483A1867AF67008CAA73 /* FDSoundActivatedRecorder.m */; };
+		D9E9483D1867B803008CAA73 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E9483C1867B803008CAA73 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,9 @@
 		D9E948281867AF1C008CAA73 /* FDSoundActivatedRecorderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FDSoundActivatedRecorderTests-Info.plist"; sourceTree = "<group>"; };
 		D9E9482A1867AF1C008CAA73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D9E9482C1867AF1C008CAA73 /* FDSoundActivatedRecorderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FDSoundActivatedRecorderTests.m; sourceTree = "<group>"; };
+		D9E948391867AF67008CAA73 /* FDSoundActivatedRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDSoundActivatedRecorder.h; sourceTree = "<group>"; };
+		D9E9483A1867AF67008CAA73 /* FDSoundActivatedRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDSoundActivatedRecorder.m; sourceTree = "<group>"; };
+		D9E9483C1867B803008CAA73 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9E9483D1867B803008CAA73 /* AVFoundation.framework in Frameworks */,
 				D9E948011867AF1C008CAA73 /* CoreGraphics.framework in Frameworks */,
 				D9E948031867AF1C008CAA73 /* UIKit.framework in Frameworks */,
 				D9E947FF1867AF1C008CAA73 /* Foundation.framework in Frameworks */,
@@ -84,6 +90,8 @@
 		D9E947F21867AF1C008CAA73 = {
 			isa = PBXGroup;
 			children = (
+				D9E948391867AF67008CAA73 /* FDSoundActivatedRecorder.h */,
+				D9E9483A1867AF67008CAA73 /* FDSoundActivatedRecorder.m */,
 				D9E948041867AF1C008CAA73 /* FDSoundActivatedRecorder */,
 				D9E948261867AF1C008CAA73 /* FDSoundActivatedRecorderTests */,
 				D9E947FD1867AF1C008CAA73 /* Frameworks */,
@@ -103,6 +111,7 @@
 		D9E947FD1867AF1C008CAA73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D9E9483C1867B803008CAA73 /* AVFoundation.framework */,
 				D9E947FE1867AF1C008CAA73 /* Foundation.framework */,
 				D9E948001867AF1C008CAA73 /* CoreGraphics.framework */,
 				D9E948021867AF1C008CAA73 /* UIKit.framework */,
@@ -256,6 +265,7 @@
 				D9E948181867AF1C008CAA73 /* ViewController.m in Sources */,
 				D9E9480F1867AF1C008CAA73 /* AppDelegate.m in Sources */,
 				D9E9480B1867AF1C008CAA73 /* main.m in Sources */,
+				D9E9483B1867AF67008CAA73 /* FDSoundActivatedRecorder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

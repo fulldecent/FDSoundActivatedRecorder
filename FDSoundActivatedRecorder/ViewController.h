@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
+- (IBAction)startTapped:(id)sender;
+- (IBAction)stopTapped:(id)sender;
+- (IBAction)playBackTapped:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *feedbackView;
 
 @end
