@@ -7,10 +7,12 @@ input and the "Start talking now prompt".
 
 <img src="http://i.imgur.com/wgOcYMl.png">
 
-Status:
+Features:
 
- * Works for me and this code is carved out from an active existing project.
- * Requires ARC and iOS 5+
+ * You can start recording when sound is detected, or immediately
+ * Sound stops recording when the user is done talking
+ * Works with ARC and iOS 5+
+ * Add `pod 'FDSoundActivatedRecorder', '~> 0.9.0'` to your <a href="https://github.com/AFNetworking/AFNetworking/wiki/Getting-Started-with-AFNetworking">Podfile</a>
 
 
 ```

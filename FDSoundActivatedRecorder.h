@@ -17,7 +17,8 @@
 @end
 
 @interface FDSoundActivatedRecorder : NSObject
-- (void)startListening;
+- (void)startListening; // ... and record when ready
+- (void)startRecording;
 - (void)stopListeningAndKeepRecordingIfInProgress:(BOOL)keep;
 - (void)deleteRecording;
 @property (strong, nonatomic) NSNumber *microphoneLevel; // sort of 0 to 1.0
@@ -28,5 +29,4 @@
 
 // WHEN USING THIS CLASS:
 // NSError *error;
-// [[AVAudioSession sharedInstance]
-//  setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+// [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
