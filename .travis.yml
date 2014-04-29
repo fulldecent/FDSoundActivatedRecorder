@@ -1,6 +1,7 @@
 language: objective-c
 xcode_project: FDSoundActivatedRecorder.xcodeproj
 xcode_scheme: FDSoundActivatedRecorder
+xcode_sdk: iphonesimulator7.0
 
 notifications:
   email:
