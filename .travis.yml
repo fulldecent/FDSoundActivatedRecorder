@@ -1,6 +1,6 @@
 language: objective-c
 xcode_project: FDSoundActivatedRecorder.xcodeproj
-xcode_scheme: FDSoundActivatedRecorderTests
+xcode_scheme: FDSoundActivatedRecorder
 
 notifications:
   email:
