@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "FDSoundActivatedRecorder.h"
 
 @interface FDSoundActivatedRecorderTests : XCTestCase
 
@@ -26,9 +27,30 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testPropertyMicrophoneLevel
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    FDSoundActivatedRecorder *recorder = [[FDSoundActivatedRecorder alloc] init];
+    NSNumber *magicValue = @(0.667);
+    recorder.microphoneLevel = magicValue;
+    XCTAssertEqualObjects(recorder.microphoneLevel, magicValue, @"Problem setting property %s", __PRETTY_FUNCTION__);
+}
+
+- (void)testPropertyRecordedDuration
+{
+    FDSoundActivatedRecorder *recorder = [[FDSoundActivatedRecorder alloc] init];
+    XCTAssertTrue([recorder respondsToSelector:@selector(recordedDuration)], @"Problem reading property %s", __PRETTY_FUNCTION__);
+}
+
+- (void)testPropertyRecordedFilePath
+{
+    FDSoundActivatedRecorder *recorder = [[FDSoundActivatedRecorder alloc] init];
+    XCTAssertTrue([recorder respondsToSelector:@selector(recordedFilePath)], @"Problem reading property %s", __PRETTY_FUNCTION__);
+}
+
+- (void)testPropertyDelegate
+{
+    FDSoundActivatedRecorder *recorder = [[FDSoundActivatedRecorder alloc] init];
+    XCTAssertTrue([recorder respondsToSelector:@selector(delegate)], @"Problem reading property %s", __PRETTY_FUNCTION__);
 }
 
 @end
