@@ -44,6 +44,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         recorder.delegate = self
         recorder.addObserver(self, forKeyPath: "microphoneLevel", options:.New, context: nil)
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        _ = try? audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
+        _ = try? audioSession.setActive(true)
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
