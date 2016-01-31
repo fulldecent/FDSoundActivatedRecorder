@@ -1,4 +1,6 @@
-FDSoundActivatedRecorder <https://travis-ci.org/fulldecent/FDSoundActivatedRecorder>
+[![Build Status](https://travis-ci.org/fulldecent/FDSoundActivatedRecorder.svg?branch=master)](https://travis-ci.org/fulldecent/FDSoundActivatedRecorder)
+
+FDSoundActivatedRecorder
 ====================================================================================
 
 Start recording when the user speaks. All you have to do is tell us when to
@@ -9,9 +11,7 @@ Features
 --------
 
 -   You can start recording when sound is detected, or immediately
-
 -   Sound stops recording when the user is done talking
-
 -   Works with ARC and iOS 5+
 
 Usage
@@ -22,17 +22,13 @@ Podfile.
 
 Import the project with:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-import FDSoundActivatedRecorder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    import FDSoundActivatedRecorder
 
 Then begin listening with:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-self.recorder = FDSoundActivatedRecorder()
-self.recorder.delegate = self
-self.recorder.startListening()
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    self.recorder = FDSoundActivatedRecorder()
+    self.recorder.delegate = self
+    self.recorder.startListening()
 
 A full implementation example is provided in this project.
 
@@ -47,7 +43,7 @@ The full API, from
 [FDSoundActivatedRecorder.swift](<https://github.com/fulldecent/FDSoundActivatedRecorder/blob/master/FDSoundActivatedRecorder.swift>)
 is copied below:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+````
 @objc protocol FDSoundActivatedRecorderDelegate {
     /// A recording was triggered or manually started
     func soundActivatedRecorderDidStartRecording(recorder: FDSoundActivatedRecorder)
@@ -84,7 +80,7 @@ class FDSoundActivatedRecorder : NSObject {
     /// This is a PRIVATE method but it must be public because a selector is used in NSTimer (Swift bug)
     func interval()
 }
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+````
 
 Technical discussion
 --------------------
@@ -95,7 +91,7 @@ constants of this program for any special needs you may have. Following is a
 technical description of how the algorithm works from
 `FDSoundActivatedRecorder.swift`.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+````
 V               Recording
 O             /-----------\
 L            /             \Fall
@@ -103,10 +99,10 @@ U           /Rise           \
 M          /                 \
 E  --------                   --------
    Listening                  Done
+````
 
-We listen and save audio levels every `INTERVAL`
-When several levels exceed the recent moving average by a threshold, we record
-(The exceeding levels are not included in the moving average)
-When several levels deceed the recent moving average by a threshold, we stop recording
-(The deceeding levels are not included in the moving average)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* We listen and save audio levels every `INTERVAL`
+* When several levels exceed the recent moving average by a threshold, we record
+* (The exceeding levels are not included in the moving average)
+* When several levels deceed the recent moving average by a threshold, we stop recording
+* (The deceeding levels are not included in the moving average)
