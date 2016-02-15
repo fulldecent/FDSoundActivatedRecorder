@@ -38,7 +38,7 @@ import AVFoundation
 */
 
 /// These should be optional but I don't know how to do that is Swift
-@objc protocol FDSoundActivatedRecorderDelegate {
+@objc public protocol FDSoundActivatedRecorderDelegate {
     /// A recording was triggered or manually started
     func soundActivatedRecorderDidStartRecording(recorder: FDSoundActivatedRecorder)
     
@@ -59,7 +59,7 @@ private enum FDSoundActivatedRecorderStatus: Int {
     case ProcessingRecording
 }
 
-class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
+public class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     private let TOTAL_TIMEOUT_SECONDS = 10.0
     /// A time interval in seconds to base all `INTERVALS` below
     private let INTERVAL_SECONDS = 0.05
@@ -111,17 +111,17 @@ class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     
     /// A log-scale reading between 0.0 (silent) and 1.0 (loud), nil if not recording
     /// TODO: make this optional (KVO needs Objective-C compatible classes, Swift bug)
-    dynamic var microphoneLevel: Double = 0.0
+    dynamic public var microphoneLevel: Double = 0.0
     
     /// Receiver for status updates
-    weak var delegate: FDSoundActivatedRecorderDelegate?
+    public weak var delegate: FDSoundActivatedRecorderDelegate?
     
     deinit {
         self.abort()
     }
     
     /// Listen and start recording when triggered
-    func startListening() {
+    public func startListening() {
         status = .Listening
         audioRecorder.stop()
         audioRecorder.recordForDuration(TOTAL_TIMEOUT_SECONDS)
@@ -132,7 +132,7 @@ class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     }
     
     /// Go back in time and start recording `RISE_TRIGGER_INTERVALS` ago
-    func startRecording() {
+    public func startRecording() {
         status = .Recording
         delegate?.soundActivatedRecorderDidStartRecording(self)
         triggerCount = 0
@@ -141,7 +141,7 @@ class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     }
     
     /// End the recording and send any processed & saved file to `delegate`
-    func stopAndSaveRecording() {
+    public func stopAndSaveRecording() {
         self.intervalTimer.invalidate()
         guard status == .Recording else {
             return
@@ -205,7 +205,7 @@ class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     }
     
     /// End any recording or listening and discard any recorded file
-    func abort() {
+    public func abort() {
         self.intervalTimer.invalidate()
         self.audioRecorder.stop()
         if status == .Recording {
@@ -217,7 +217,7 @@ class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     }
     
     /// This is a PRIVATE method but it must be public because a selector is used in NSTimer (Swift bug)
-    func interval() {
+    public func interval() {
         guard self.audioRecorder.recording else {
             // Timed out
             self.abort()
