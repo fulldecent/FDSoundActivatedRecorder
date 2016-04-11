@@ -29,22 +29,22 @@ class FDSoundActivatedRecorderTests: XCTestCase {
     
     func testStartListeningAvailable() {
         let recorder = FDSoundActivatedRecorder()
-        XCTAssert(recorder.respondsToSelector("startListening"), "Problem reading property \(__FUNCTION__)")
+        XCTAssert(recorder.respondsToSelector(#selector(FDSoundActivatedRecorder.startListening)), "Problem reading property \(#function)")
     }
     
     func testStartRecordingAvailable() {
         let recorder = FDSoundActivatedRecorder()
-        XCTAssertTrue(recorder.respondsToSelector("startRecording"), "Problem reading property \(__FUNCTION__)")
+        XCTAssertTrue(recorder.respondsToSelector(#selector(FDSoundActivatedRecorder.startRecording)), "Problem reading property \(#function)")
     }
     
     func testStopAndSaveRecordingAvailable() {
         let recorder = FDSoundActivatedRecorder()
-        XCTAssertTrue(recorder.respondsToSelector("stopAndSaveRecording"), "Problem reading property \(__FUNCTION__)")
+        XCTAssertTrue(recorder.respondsToSelector(#selector(FDSoundActivatedRecorder.stopAndSaveRecording)), "Problem reading property \(#function)")
     }
     
     func testAbortAvailable() {
         let recorder = FDSoundActivatedRecorder()
-        XCTAssertTrue(recorder.respondsToSelector("abort"), "Problem reading property \(__FUNCTION__)")
+        XCTAssertTrue(recorder.respondsToSelector(#selector(FDSoundActivatedRecorder.abort)), "Problem reading property \(#function)")
     }
     
 }

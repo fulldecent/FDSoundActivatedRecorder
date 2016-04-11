@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  FDSoundActivatedRecorder
+//  FDSoundActivatedRecorderDemo
 //
-//  Created by William Entriken on 1/30/16.
+//  Created by Full Decent on 4/11/16.
 //  Copyright © 2016 William Entriken. All rights reserved.
 //
 

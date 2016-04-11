@@ -9,12 +9,13 @@
 import UIKit
 import AVKit
 import AVFoundation
+import FDSoundActivatedRecorder
 
 class ViewController: UIViewController {
     var recorder = FDSoundActivatedRecorder()
     var savedURL = NSURL()
     var player = AVPlayer()
-
+    
     @IBAction func pressedStartListening() {
         recorder.startListening()
     }
@@ -33,13 +34,13 @@ class ViewController: UIViewController {
     
     @IBAction func pressedPlayBack() {
         player = AVPlayer(URL: savedURL)
-        player.play()        
+        player.play()
     }
     
     @IBOutlet weak var progressView: UIProgressView!
     
     @IBOutlet weak var microphoneLevel: UILabel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         recorder.delegate = self
