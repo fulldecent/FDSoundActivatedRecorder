@@ -1,9 +1,9 @@
 # FDSoundActivatedRecorder
 
-[![CI Status](http://img.shields.io/travis/fulldecent/FDSoundActivatedRecorder.svg?style=flat)](https://travis-ci.org/fulldecent/FDWaveformView)
-[![Version](https://img.shields.io/cocoapods/v/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDWaveformView)
-[![License](https://img.shields.io/cocoapods/l/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDWaveformView)
-[![Platform](https://img.shields.io/cocoapods/p/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDWaveformView)
+[![CI Status](http://img.shields.io/travis/fulldecent/FDSoundActivatedRecorder.svg?style=flat)](https://travis-ci.org/fulldecent/FDSoundActivatedRecorder)
+[![Version](https://img.shields.io/cocoapods/v/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDSoundActivatedRecorder)
+[![License](https://img.shields.io/cocoapods/l/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDSoundActivatedRecorder)
+[![Platform](https://img.shields.io/cocoapods/p/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDSoundActivatedRecorder)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 Start recording when the user speaks. All you have to do is tell us when to
