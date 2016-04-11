@@ -125,7 +125,7 @@ public class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         status = .Listening
         audioRecorder.stop()
         audioRecorder.recordForDuration(TOTAL_TIMEOUT_SECONDS)
-        intervalTimer = NSTimer.scheduledTimerWithTimeInterval(INTERVAL_SECONDS, target: self, selector: "interval", userInfo: nil, repeats: true)
+        intervalTimer = NSTimer.scheduledTimerWithTimeInterval(INTERVAL_SECONDS, target: self, selector: #selector(FDSoundActivatedRecorder.interval), userInfo: nil, repeats: true)
         self.listeningIntervals.removeAll()
         self.recordingIntervals.removeAll()
         self.triggerCount = 0
