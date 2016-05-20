@@ -242,7 +242,7 @@ public class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             if recordingIntervals.count >= RECORDING_MINIMUM_INTERVALS && currentLevel <= recordingAverageLevel - FALL_TRIGGER_DB {
                 triggerCount = triggerCount + 1
             } else {
-                traggerCount = 0
+                triggerCount = 0
                 recordingIntervals.append(currentLevel)
                 if recordingIntervals.count > RECORDING_AVERAGING_INTERVALS {
                     recordingIntervals.removeAtIndex(0)
@@ -257,7 +257,7 @@ public class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             if listeningIntervals.count >= LISTENING_MINIMUM_INTERVALS && currentLevel >= listeningAverageLevel + RISE_TRIGGER_DB {
                 triggerCount = triggerCount + 1
             } else {
-                traggerCount = 0
+                triggerCount = 0
                 listeningIntervals.append(currentLevel)
                 if listeningIntervals.count > LISTENING_AVERAGING_INTERVALS {
                     listeningIntervals.removeAtIndex(0)
