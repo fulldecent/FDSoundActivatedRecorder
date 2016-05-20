@@ -239,7 +239,7 @@ public class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         case .Recording:
             let recordingAverageLevel = recordingIntervals.reduce(0.0, combine: +) / Double(recordingIntervals.count)
             NSLog("Recording avg %2.2f current %2.2f Intervals %d Triggers %d", recordingAverageLevel, currentLevel, recordingIntervals.count, triggerCount)
-            if recordingIntervals.count >= RECORDING_MINIMUM_INTERVALS && currentLevel <= recordingAverageLevel {
+            if recordingIntervals.count >= RECORDING_MINIMUM_INTERVALS && currentLevel <= recordingAverageLevel - FALL_TRIGGER_DB {
                 triggerCount = triggerCount + 1
             } else {
                 recordingIntervals.append(currentLevel)
