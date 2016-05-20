@@ -21,9 +21,9 @@ import AVFoundation
  *    Listening                  Done
  *
  * We listen and save audio levels every `INTERVAL`
- * When several levels exceed the recent moving average by a threshold, we record
+ * When several consecutive levels exceed the recent moving average by a threshold, we record
  * (The exceeding levels are not included in the moving average)
- * When several levels deceed the recent moving average by a threshold, we stop recording
+ * When several consecutive levels deceed the recent moving average by a threshold, we stop recording
  * (The deceeding levels are not included in the moving average)
  *
  * The final recording includes RISE, RECORDING, and FALL sections and the RISE and FALL
@@ -242,6 +242,7 @@ public class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             if recordingIntervals.count >= RECORDING_MINIMUM_INTERVALS && currentLevel <= recordingAverageLevel - FALL_TRIGGER_DB {
                 triggerCount = triggerCount + 1
             } else {
+                traggerCount = 0
                 recordingIntervals.append(currentLevel)
                 if recordingIntervals.count > RECORDING_AVERAGING_INTERVALS {
                     recordingIntervals.removeAtIndex(0)
@@ -256,6 +257,7 @@ public class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             if listeningIntervals.count >= LISTENING_MINIMUM_INTERVALS && currentLevel >= listeningAverageLevel + RISE_TRIGGER_DB {
                 triggerCount = triggerCount + 1
             } else {
+                traggerCount = 0
                 listeningIntervals.append(currentLevel)
                 if listeningIntervals.count > LISTENING_AVERAGING_INTERVALS {
                     listeningIntervals.removeAtIndex(0)
