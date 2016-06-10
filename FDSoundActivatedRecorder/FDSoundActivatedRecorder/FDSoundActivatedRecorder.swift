@@ -187,19 +187,21 @@ public class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         
         NSLog("FDSoundActivatedRecorder audio export started")
         exportSession.exportAsynchronouslyWithCompletionHandler {
-            switch exportSession.status {
-            case .Completed:
-                self.delegate?.soundActivatedRecorderDidFinishRecording(self, andSaved: trimmedAudioFileURL)
-                NSLog("FDSoundActivatedRecorder audio export succeeded")
-            case .Failed:
-                // a failure may happen because of an event out of your control
-                // for example, an interruption like a phone call comming in
-                // make sure and handle this case appropriately
-                NSLog("AVAssetExportSessionStatusFailed %@", exportSession.error!.localizedDescription)
-                self.delegate?.soundActivatedRecorderDidAbort(self)
-            default:
-                NSLog("AVAssetExportSessionStatus was not expected")
-                self.delegate?.soundActivatedRecorderDidAbort(self)
+            dispatch_async(dispatch_get_main_queue()) {
+                switch exportSession.status {
+                case .Completed:
+                    self.delegate?.soundActivatedRecorderDidFinishRecording(self, andSaved: trimmedAudioFileURL)
+                    NSLog("FDSoundActivatedRecorder audio export succeeded")
+                case .Failed:
+                    // a failure may happen because of an event out of your control
+                    // for example, an interruption like a phone call comming in
+                    // make sure and handle this case appropriately
+                    NSLog("AVAssetExportSessionStatusFailed %@", exportSession.error!.localizedDescription)
+                    self.delegate?.soundActivatedRecorderDidAbort(self)
+                default:
+                    NSLog("AVAssetExportSessionStatus was not expected")
+                    self.delegate?.soundActivatedRecorderDidAbort(self)
+                }
             }
         }
     }
