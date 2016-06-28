@@ -59,6 +59,7 @@ private enum FDSoundActivatedRecorderStatus: Int {
     case ProcessingRecording
 }
 
+/// An automated listener / recorder
 public class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     private let TOTAL_TIMEOUT_SECONDS = 10.0
     /// A time interval in seconds to base all `INTERVALS` below
