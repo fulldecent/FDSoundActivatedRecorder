@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/1.0.5...master)
+## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/1.0.6...master)
+
+---
+
+## [1.0.6](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/1.0.6)
+Released on 2016-06-27.
 
 #### Added
 - Complete API documentation
