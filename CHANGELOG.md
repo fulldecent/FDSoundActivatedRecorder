@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 ## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/1.0.5...master)
 
 #### Added
+- Documentation for release process
+  - Added by [William Entriken](https://github.com/fulldecent) in Regards to Issue
+  [#13](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/13).
 - Change Log
   - Added by [William Entriken](https://github.com/fulldecent) in Regards to Issue
   [#11](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/11).
