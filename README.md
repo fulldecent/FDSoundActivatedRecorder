@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDSoundActivatedRecorder)
 [![Platform](https://img.shields.io/cocoapods/p/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDSoundActivatedRecorder)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=fulldecent/FDSoundActivatedRecorder)](http://clayallsopp.github.io/readme-score?url=fulldecent/FDSoundActivatedRecorder)
+
 
 Start recording when the user speaks. All you have to do is tell us when to
 start listening. Then we wait for an audible noise and start recording. This is
