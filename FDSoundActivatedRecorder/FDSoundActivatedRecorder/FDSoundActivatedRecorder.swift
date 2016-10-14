@@ -97,7 +97,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         audioRecorder.delegate = self
         audioRecorder.isMeteringEnabled = true
         if !audioRecorder.prepareToRecord() {
-            NSLog("FDSoundActivateRecorder can't prepare recorder")
+            print("FDSoundActivateRecorder can't prepare recorder")
         }
         return audioRecorder
     }()
@@ -160,7 +160,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             _ = try? fileManager.removeItem(at: trimmedAudioFileURL)
         }
         
-        //NSLog("FDSoundActivatedRecorder saving cleaned file to %@", trimmedAudioFileURL)
+        print("FDSoundActivatedRecorder saving cleaned file to %@", trimmedAudioFileURL)
         
         // Create time ranges for trimming and fading
         let fadeInDoneTime = CMTimeAdd(recordingBeginTime, CMTimeMake(Int64(Double(RISE_TRIGGER_INTERVALS) * Double(INTERVAL_SECONDS) * Double(SAVING_SAMPLES_PER_SECOND)), Int32(SAVING_SAMPLES_PER_SECOND)))
@@ -186,21 +186,21 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         exportSession.timeRange = exportTimeRange
         exportSession.audioMix = exportAudioMix
         
-        NSLog("FDSoundActivatedRecorder audio export started")
+        print("FDSoundActivatedRecorder audio export started")
         exportSession.exportAsynchronously {
             DispatchQueue.main.async {
                 switch exportSession.status {
                 case .completed:
                     self.delegate?.soundActivatedRecorderDidFinishRecording(self, andSaved: trimmedAudioFileURL)
-                    NSLog("FDSoundActivatedRecorder audio export succeeded")
+                    print("FDSoundActivatedRecorder audio export succeeded")
                 case .failed:
                     // a failure may happen because of an event out of your control
                     // for example, an interruption like a phone call comming in
                     // make sure and handle this case appropriately
-                    NSLog("AVAssetExportSessionStatusFailed %@", exportSession.error!.localizedDescription)
+                    print("AVAssetExportSessionStatusFailed %@", exportSession.error!.localizedDescription)
                     self.delegate?.soundActivatedRecorderDidAbort(self)
                 default:
-                    NSLog("AVAssetExportSessionStatus was not expected")
+                    print("AVAssetExportSessionStatus was not expected")
                     self.delegate?.soundActivatedRecorderDidAbort(self)
                 }
             }
@@ -241,7 +241,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         switch status {
         case .recording:
             let recordingAverageLevel = recordingIntervals.reduce(0.0, +) / Double(recordingIntervals.count)
-            NSLog("Recording avg %2.2f current %2.2f Intervals %d Triggers %d", recordingAverageLevel, currentLevel, recordingIntervals.count, triggerCount)
+            print("Recording avg %2.2f current %2.2f Intervals %d Triggers %d", recordingAverageLevel, currentLevel, recordingIntervals.count, triggerCount)
             if recordingIntervals.count >= RECORDING_MINIMUM_INTERVALS && currentLevel <= recordingAverageLevel - FALL_TRIGGER_DB {
                 triggerCount = triggerCount + 1
             } else {
@@ -256,7 +256,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             }
         case .listening:
             let listeningAverageLevel = listeningIntervals.reduce(0.0, +) / Double(listeningIntervals.count)
-            NSLog("Listening avg %2.2f current %2.2f Intervals %d Triggers %d", listeningAverageLevel, currentLevel, listeningIntervals.count, triggerCount)
+            print("Listening avg %2.2f current %2.2f Intervals %d Triggers %d", listeningAverageLevel, currentLevel, listeningIntervals.count, triggerCount)
             if listeningIntervals.count >= LISTENING_MINIMUM_INTERVALS && currentLevel >= listeningAverageLevel + RISE_TRIGGER_DB {
                 triggerCount = triggerCount + 1
             } else {
