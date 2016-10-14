@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83ABB0741DB162CA008EB59D /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 83ABB0731DB162CA008EB59D /* .swift-version */; };
 		D9A473021CBC603B001D3A59 /* FDSoundActivatedRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A473011CBC603B001D3A59 /* FDSoundActivatedRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D9A473091CBC603B001D3A59 /* FDSoundActivatedRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A472FE1CBC603B001D3A59 /* FDSoundActivatedRecorder.framework */; };
 		D9A4730E1CBC603B001D3A59 /* FDSoundActivatedRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4730D1CBC603B001D3A59 /* FDSoundActivatedRecorderTests.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		83ABB0731DB162CA008EB59D /* .swift-version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ".swift-version"; path = "../.swift-version"; sourceTree = "<group>"; };
 		D9A472FE1CBC603B001D3A59 /* FDSoundActivatedRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FDSoundActivatedRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A473011CBC603B001D3A59 /* FDSoundActivatedRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FDSoundActivatedRecorder.h; sourceTree = "<group>"; };
 		D9A473031CBC603B001D3A59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 		D9A472F41CBC603B001D3A59 = {
 			isa = PBXGroup;
 			children = (
+				83ABB0731DB162CA008EB59D /* .swift-version */,
 				D9A473001CBC603B001D3A59 /* FDSoundActivatedRecorder */,
 				D9A4730C1CBC603B001D3A59 /* FDSoundActivatedRecorderTests */,
 				D9A472FF1CBC603B001D3A59 /* Products */,
@@ -184,6 +187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83ABB0741DB162CA008EB59D /* .swift-version in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
