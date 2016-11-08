@@ -147,6 +147,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         guard status == .recording else {
             return
         }
+        status = .processingRecording
         self.microphoneLevel = 0.0
         let timeSamples = audioRecorder.currentTime * Double(SAVING_SAMPLES_PER_SECOND)
         recordingEndTime = CMTimeMake(Int64(timeSamples), Int32(SAVING_SAMPLES_PER_SECOND))
@@ -189,6 +190,8 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         print("FDSoundActivatedRecorder audio export started")
         exportSession.exportAsynchronously {
             DispatchQueue.main.async {
+                self.status = .inactive
+                
                 switch exportSession.status {
                 case .completed:
                     self.delegate?.soundActivatedRecorderDidFinishRecording(self, andSaved: trimmedAudioFileURL)
