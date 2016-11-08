@@ -78,7 +78,6 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     fileprivate lazy var recordedFileURL: URL = {
         let file = "recording\(arc4random()).caf"
         let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(file)
-        print("FDSoundActivatedRecorder opened recording file: %@", url)
         return url
     }()
     
@@ -97,7 +96,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         audioRecorder.delegate = self
         audioRecorder.isMeteringEnabled = true
         if !audioRecorder.prepareToRecord() {
-            print("FDSoundActivateRecorder can't prepare recorder")
+            // FDSoundActivateRecorder can't prepare recorder
         }
         return audioRecorder
     }()
@@ -147,6 +146,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         guard status == .recording else {
             return
         }
+        status = .processingRecording
         self.microphoneLevel = 0.0
         let timeSamples = audioRecorder.currentTime * Double(SAVING_SAMPLES_PER_SECOND)
         recordingEndTime = CMTimeMake(Int64(timeSamples), Int32(SAVING_SAMPLES_PER_SECOND))
@@ -159,8 +159,6 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             let fileManager = FileManager.default
             _ = try? fileManager.removeItem(at: trimmedAudioFileURL)
         }
-        
-        print("FDSoundActivatedRecorder saving cleaned file to %@", trimmedAudioFileURL)
         
         // Create time ranges for trimming and fading
         let fadeInDoneTime = CMTimeAdd(recordingBeginTime, CMTimeMake(Int64(Double(RISE_TRIGGER_INTERVALS) * Double(INTERVAL_SECONDS) * Double(SAVING_SAMPLES_PER_SECOND)), Int32(SAVING_SAMPLES_PER_SECOND)))
@@ -186,21 +184,20 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         exportSession.timeRange = exportTimeRange
         exportSession.audioMix = exportAudioMix
         
-        print("FDSoundActivatedRecorder audio export started")
         exportSession.exportAsynchronously {
             DispatchQueue.main.async {
+                self.status = .inactive
+                
                 switch exportSession.status {
                 case .completed:
                     self.delegate?.soundActivatedRecorderDidFinishRecording(self, andSaved: trimmedAudioFileURL)
-                    print("FDSoundActivatedRecorder audio export succeeded")
                 case .failed:
                     // a failure may happen because of an event out of your control
                     // for example, an interruption like a phone call comming in
                     // make sure and handle this case appropriately
-                    print("AVAssetExportSessionStatusFailed %@", exportSession.error!.localizedDescription)
+                    // FIXME: add another delegate method for failing with exportSession.error
                     self.delegate?.soundActivatedRecorderDidAbort(self)
                 default:
-                    print("AVAssetExportSessionStatus was not expected")
                     self.delegate?.soundActivatedRecorderDidAbort(self)
                 }
             }
@@ -241,7 +238,6 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         switch status {
         case .recording:
             let recordingAverageLevel = recordingIntervals.reduce(0.0, +) / Double(recordingIntervals.count)
-            print("Recording avg %2.2f current %2.2f Intervals %d Triggers %d", recordingAverageLevel, currentLevel, recordingIntervals.count, triggerCount)
             if recordingIntervals.count >= RECORDING_MINIMUM_INTERVALS && currentLevel <= recordingAverageLevel - FALL_TRIGGER_DB {
                 triggerCount = triggerCount + 1
             } else {
@@ -256,7 +252,6 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             }
         case .listening:
             let listeningAverageLevel = listeningIntervals.reduce(0.0, +) / Double(listeningIntervals.count)
-            print("Listening avg %2.2f current %2.2f Intervals %d Triggers %d", listeningAverageLevel, currentLevel, listeningIntervals.count, triggerCount)
             if listeningIntervals.count >= LISTENING_MINIMUM_INTERVALS && currentLevel >= listeningAverageLevel + RISE_TRIGGER_DB {
                 triggerCount = triggerCount + 1
             } else {
