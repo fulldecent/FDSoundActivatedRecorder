@@ -13,7 +13,7 @@ import FDSoundActivatedRecorder
 
 class ViewController: UIViewController {
     var recorder = FDSoundActivatedRecorder()
-    var savedURL = NSURL()
+    var savedURL: URL? = nil
     var player = AVPlayer()
     
     @IBAction func pressedStartListening() {
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func pressedPlayBack() {
-        player = AVPlayer(URL: savedURL)
+        player = AVPlayer(url: savedURL!)
         player.play()
     }
     
@@ -44,15 +44,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         recorder.delegate = self
-        recorder.addObserver(self, forKeyPath: "microphoneLevel", options:.New, context: nil)
+        recorder.addObserver(self, forKeyPath: "microphoneLevel", options:.new, context: nil)
         
         let audioSession = AVAudioSession.sharedInstance()
         _ = try? audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
         _ = try? audioSession.setActive(true)
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        switch change![NSKeyValueChangeNewKey] {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        switch change![NSKeyValueChangeKey.newKey] {
         case let level as Double:
             progressView.progress = Float(level)
             microphoneLevel.text = String(format: "%0.2f", level)
@@ -64,23 +64,23 @@ class ViewController: UIViewController {
 
 extension ViewController: FDSoundActivatedRecorderDelegate {
     /// A recording was triggered or manually started
-    func soundActivatedRecorderDidStartRecording(recorder: FDSoundActivatedRecorder) {
-        progressView.progressTintColor = UIColor.redColor()
+    func soundActivatedRecorderDidStartRecording(_ recorder: FDSoundActivatedRecorder) {
+        progressView.progressTintColor = UIColor.red
     }
     
     /// No recording has started or been completed after listening for `TOTAL_TIMEOUT_SECONDS`
-    func soundActivatedRecorderDidTimeOut(recorder: FDSoundActivatedRecorder) {
-        progressView.progressTintColor = UIColor.blueColor()
+    func soundActivatedRecorderDidTimeOut(_ recorder: FDSoundActivatedRecorder) {
+        progressView.progressTintColor = UIColor.blue
     }
     
     /// The recording and/or listening ended and no recording was captured
-    func soundActivatedRecorderDidAbort(recorder: FDSoundActivatedRecorder) {
-        progressView.progressTintColor = UIColor.blueColor()
+    func soundActivatedRecorderDidAbort(_ recorder: FDSoundActivatedRecorder) {
+        progressView.progressTintColor = UIColor.blue
     }
     
     /// A recording was successfully captured
-    func soundActivatedRecorderDidFinishRecording(recorder: FDSoundActivatedRecorder, andSaved file: NSURL) {
-        progressView.progressTintColor = UIColor.blueColor()
+    func soundActivatedRecorderDidFinishRecording(_ recorder: FDSoundActivatedRecorder, andSaved file: URL) {
+        progressView.progressTintColor = UIColor.blue
         savedURL = file
     }
 }
