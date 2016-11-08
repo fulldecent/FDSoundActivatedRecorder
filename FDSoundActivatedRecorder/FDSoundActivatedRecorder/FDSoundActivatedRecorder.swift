@@ -52,7 +52,7 @@ import AVFoundation
     func soundActivatedRecorderDidFinishRecording(_ recorder: FDSoundActivatedRecorder, andSaved file:URL)
 }
 
-private enum FDSoundActivatedRecorderStatus: Int {
+@objc public enum FDSoundActivatedRecorderStatus: Int {
     case inactive
     case listening
     case recording
@@ -102,7 +102,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         return audioRecorder
     }()
     
-    fileprivate var status = FDSoundActivatedRecorderStatus.inactive
+    fileprivate(set) var status = FDSoundActivatedRecorderStatus.inactive
     fileprivate var listeningIntervals = [Double]()
     fileprivate var recordingIntervals = [Double]()
     fileprivate var triggerCount = 0
