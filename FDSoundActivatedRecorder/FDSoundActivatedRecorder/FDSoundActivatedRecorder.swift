@@ -42,7 +42,7 @@ import AVFoundation
     /// A recording was triggered or manually started
     func soundActivatedRecorderDidStartRecording(_ recorder: FDSoundActivatedRecorder)
     
-    /// No recording has started or been completed after listening for `TOTAL_TIMEOUT_SECONDS`
+    /// No recording has started or been completed after listening for `timeoutSeconds`
     func soundActivatedRecorderDidTimeOut(_ recorder: FDSoundActivatedRecorder)
     
     /// The recording and/or listening ended and no recording was captured
@@ -61,18 +61,39 @@ import AVFoundation
 
 /// An automated listener / recorder
 open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
-    fileprivate let TOTAL_TIMEOUT_SECONDS = 10.0
+    
+    /// Number of seconds until recording stops automatically
+    private let timeoutSeconds = 10.0
+    
     /// A time interval in seconds to base all `INTERVALS` below
-    fileprivate let INTERVAL_SECONDS = 0.05
-    fileprivate let LISTENING_MINIMUM_INTERVALS = 2
-    fileprivate let LISTENING_AVERAGING_INTERVALS = 7
-    fileprivate let RISE_TRIGGER_DB = 13.0
-    fileprivate let RISE_TRIGGER_INTERVALS = 2
-    fileprivate let RECORDING_MINIMUM_INTERVALS = 4
-    fileprivate let RECORDING_AVERAGING_INTERVALS = 15
-    fileprivate let FALL_TRIGGER_DB = 10.0
-    fileprivate let FALL_TRIGGER_INTERVALS = 2
-    fileprivate let SAVING_SAMPLES_PER_SECOND = 22050
+    private let intervalSeconds = 0.05
+    
+    /// Minimum amount of time (in INTERVALS) to listen but not cause rise triggers
+    private let listeningMinimumIntervals = 2
+    
+    /// Amount of time (in INTERVALS) to average when deciding to trigger for listening
+    private let listeningAveragingIntervals = 7
+    
+    /// Relative signal strength (in dB) to detect triggers versus average listening level
+    private let riseTriggerDb = 13.0
+    
+    /// Number of triggers to begin recording
+    private let riseTriggerIntervals = 2
+    
+    /// Minimum amount of time (in INTERVALS) to record
+    private let recordingMinimumIntervals = 4
+    
+    /// Amount of time (in INTERVALS) to average when deciding to stop recording
+    private let recordingAveragingIntervals = 15
+    
+    /// Relative signal strength (in Db) to detect triggers versus average recording level
+    private let fallTriggerDb = 10.0
+    
+    /// Number of triggers to end recording
+    private let fallTriggerIntervals = 2
+    
+    /// Recording sample rate (in Hz)
+    private let savingSamplesPerSecond = 22050
     
     /// Location of the recorded file
     fileprivate lazy var recordedFileURL: URL = {
@@ -85,7 +106,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         // USE kAudioFormatLinearPCM
         // SEE IMA4 vs M4A http://stackoverflow.com/questions/3509921/recorder-works-on-iphone-3gs-but-not-on-iphone-3g
         let recordSettings: [String : Int] = [
-            AVSampleRateKey : self.SAVING_SAMPLES_PER_SECOND,
+            AVSampleRateKey : self.savingSamplesPerSecond,
             AVFormatIDKey : Int(kAudioFormatLinearPCM),
             AVNumberOfChannelsKey : Int(1),
             AVLinearPCMIsFloatKey : 0,
@@ -124,20 +145,20 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     open func startListening() {
         status = .listening
         audioRecorder.stop()
-        audioRecorder.record(forDuration: TOTAL_TIMEOUT_SECONDS)
-        intervalTimer = Timer.scheduledTimer(timeInterval: INTERVAL_SECONDS, target: self, selector: #selector(FDSoundActivatedRecorder.interval), userInfo: nil, repeats: true)
+        audioRecorder.record(forDuration: timeoutSeconds)
+        intervalTimer = Timer.scheduledTimer(timeInterval: intervalSeconds, target: self, selector: #selector(FDSoundActivatedRecorder.interval), userInfo: nil, repeats: true)
         self.listeningIntervals.removeAll()
         self.recordingIntervals.removeAll()
         self.triggerCount = 0
     }
     
-    /// Go back in time and start recording `RISE_TRIGGER_INTERVALS` ago
+    /// Go back in time and start recording `riseTriggerIntervals` ago
     open func startRecording() {
         status = .recording
         delegate?.soundActivatedRecorderDidStartRecording(self)
         triggerCount = 0
-        let timeSamples = max(0.0, audioRecorder.currentTime - Double(INTERVAL_SECONDS) * Double(RISE_TRIGGER_INTERVALS)) * Double(SAVING_SAMPLES_PER_SECOND)
-        recordingBeginTime = CMTimeMake(Int64(timeSamples), Int32(SAVING_SAMPLES_PER_SECOND))
+        let timeSamples = max(0.0, audioRecorder.currentTime - Double(intervalSeconds) * Double(riseTriggerIntervals)) * Double(savingSamplesPerSecond)
+        recordingBeginTime = CMTimeMake(Int64(timeSamples), Int32(savingSamplesPerSecond))
     }
     
     /// End the recording and send any processed & saved file to `delegate`
@@ -148,8 +169,8 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         }
         status = .processingRecording
         self.microphoneLevel = 0.0
-        let timeSamples = audioRecorder.currentTime * Double(SAVING_SAMPLES_PER_SECOND)
-        recordingEndTime = CMTimeMake(Int64(timeSamples), Int32(SAVING_SAMPLES_PER_SECOND))
+        let timeSamples = audioRecorder.currentTime * Double(savingSamplesPerSecond)
+        recordingEndTime = CMTimeMake(Int64(timeSamples), Int32(savingSamplesPerSecond))
         audioRecorder.stop()
         
         // Prepare output
@@ -161,8 +182,8 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         }
         
         // Create time ranges for trimming and fading
-        let fadeInDoneTime = CMTimeAdd(recordingBeginTime, CMTimeMake(Int64(Double(RISE_TRIGGER_INTERVALS) * Double(INTERVAL_SECONDS) * Double(SAVING_SAMPLES_PER_SECOND)), Int32(SAVING_SAMPLES_PER_SECOND)))
-        let fadeOutStartTime = CMTimeSubtract(recordingEndTime, CMTimeMake(Int64(Double(FALL_TRIGGER_INTERVALS) * Double(INTERVAL_SECONDS) * Double(SAVING_SAMPLES_PER_SECOND)), Int32(SAVING_SAMPLES_PER_SECOND)))
+        let fadeInDoneTime = CMTimeAdd(recordingBeginTime, CMTimeMake(Int64(Double(riseTriggerIntervals) * Double(intervalSeconds) * Double(savingSamplesPerSecond)), Int32(savingSamplesPerSecond)))
+        let fadeOutStartTime = CMTimeSubtract(recordingEndTime, CMTimeMake(Int64(Double(fallTriggerIntervals) * Double(intervalSeconds) * Double(savingSamplesPerSecond)), Int32(savingSamplesPerSecond)))
         let exportTimeRange = CMTimeRangeFromTimeToTime(recordingBeginTime, recordingEndTime)
         let fadeInTimeRange = CMTimeRangeFromTimeToTime(recordingBeginTime, fadeInDoneTime)
         let fadeOutTimeRange = CMTimeRangeFromTimeToTime(fadeOutStartTime, recordingEndTime)
@@ -238,30 +259,30 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         switch status {
         case .recording:
             let recordingAverageLevel = recordingIntervals.reduce(0.0, +) / Double(recordingIntervals.count)
-            if recordingIntervals.count >= RECORDING_MINIMUM_INTERVALS && currentLevel <= recordingAverageLevel - FALL_TRIGGER_DB {
+            if recordingIntervals.count >= recordingMinimumIntervals && currentLevel <= recordingAverageLevel - fallTriggerDb {
                 triggerCount = triggerCount + 1
             } else {
                 triggerCount = 0
                 recordingIntervals.append(currentLevel)
-                if recordingIntervals.count > RECORDING_AVERAGING_INTERVALS {
+                if recordingIntervals.count > recordingAveragingIntervals {
                     recordingIntervals.remove(at: 0)
                 }
             }
-            if triggerCount >= FALL_TRIGGER_INTERVALS {
+            if triggerCount >= fallTriggerIntervals {
                 stopAndSaveRecording()
             }
         case .listening:
             let listeningAverageLevel = listeningIntervals.reduce(0.0, +) / Double(listeningIntervals.count)
-            if listeningIntervals.count >= LISTENING_MINIMUM_INTERVALS && currentLevel >= listeningAverageLevel + RISE_TRIGGER_DB {
+            if listeningIntervals.count >= listeningMinimumIntervals && currentLevel >= listeningAverageLevel + riseTriggerDb {
                 triggerCount = triggerCount + 1
             } else {
                 triggerCount = 0
                 listeningIntervals.append(currentLevel)
-                if listeningIntervals.count > LISTENING_AVERAGING_INTERVALS {
+                if listeningIntervals.count > listeningAveragingIntervals {
                     listeningIntervals.remove(at: 0)
                 }
             }
-            if triggerCount >= RISE_TRIGGER_INTERVALS {
+            if triggerCount >= riseTriggerIntervals {
                 startRecording()
             }
         default:

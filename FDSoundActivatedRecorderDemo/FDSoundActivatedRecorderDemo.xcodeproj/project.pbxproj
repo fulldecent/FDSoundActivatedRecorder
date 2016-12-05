@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		42017FEB1DD277A7003694FF /* FDSoundActivatedRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42017FEA1DD277A7003694FF /* FDSoundActivatedRecorder.framework */; };
-		42017FEC1DD277A7003694FF /* FDSoundActivatedRecorder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42017FEA1DD277A7003694FF /* FDSoundActivatedRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D9A473271CBC6115001D3A59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A473261CBC6115001D3A59 /* AppDelegate.swift */; };
 		D9A473291CBC6115001D3A59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A473281CBC6115001D3A59 /* ViewController.swift */; };
 		D9A4732E1CBC6115001D3A59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9A4732D1CBC6115001D3A59 /* Assets.xcassets */; };
@@ -23,7 +21,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				42017FEC1DD277A7003694FF /* FDSoundActivatedRecorder.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -31,7 +28,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		42017FEA1DD277A7003694FF /* FDSoundActivatedRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FDSoundActivatedRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A473231CBC6115001D3A59 /* FDSoundActivatedRecorderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FDSoundActivatedRecorderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A473261CBC6115001D3A59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9A473281CBC6115001D3A59 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -46,7 +42,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42017FEB1DD277A7003694FF /* FDSoundActivatedRecorder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,7 +51,6 @@
 		D9A4731A1CBC6115001D3A59 = {
 			isa = PBXGroup;
 			children = (
-				42017FEA1DD277A7003694FF /* FDSoundActivatedRecorder.framework */,
 				D9A473251CBC6115001D3A59 /* FDSoundActivatedRecorderDemo */,
 				D9A473241CBC6115001D3A59 /* Products */,
 			);
