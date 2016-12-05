@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/1.0.6...master)
 
+#### Fixed
+- Fix .gitignore and remove built files
+
 ---
 
 ## [2.0.0](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/2.0.0)
