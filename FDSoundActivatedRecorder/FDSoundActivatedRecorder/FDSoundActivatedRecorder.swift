@@ -229,7 +229,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     open func abort() {
         self.intervalTimer.invalidate()
         self.audioRecorder.stop()
-        if status == .recording {
+        if status != .inactive {
             status = .inactive
             self.delegate?.soundActivatedRecorderDidAbort(self)
             let fileManager: FileManager = FileManager.default
