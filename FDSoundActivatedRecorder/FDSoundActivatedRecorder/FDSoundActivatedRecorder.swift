@@ -37,7 +37,7 @@ import AVFoundation
  * try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
  */
 
-/// These should be optional but I don't know how to do that is Swift
+/// These should be optional but I don't know how to do that in Swift
 @objc public protocol FDSoundActivatedRecorderDelegate {
     /// A recording was triggered or manually started
     func soundActivatedRecorderDidStartRecording(_ recorder: FDSoundActivatedRecorder)
@@ -63,37 +63,37 @@ import AVFoundation
 open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     
     /// Number of seconds until recording stops automatically
-    private let timeoutSeconds = 10.0
+    public var timeoutSeconds = 10.0
     
     /// A time interval in seconds to base all `INTERVALS` below
-    private let intervalSeconds = 0.05
+    public var intervalSeconds = 0.05
     
     /// Minimum amount of time (in INTERVALS) to listen but not cause rise triggers
-    private let listeningMinimumIntervals = 2
+    public var listeningMinimumIntervals = 2
     
     /// Amount of time (in INTERVALS) to average when deciding to trigger for listening
-    private let listeningAveragingIntervals = 7
+    public var listeningAveragingIntervals = 7
     
     /// Relative signal strength (in dB) to detect triggers versus average listening level
-    private let riseTriggerDb = 13.0
+    public var riseTriggerDb = 13.0
     
     /// Number of triggers to begin recording
-    private let riseTriggerIntervals = 2
+    public var riseTriggerIntervals = 2
     
     /// Minimum amount of time (in INTERVALS) to record
-    private let recordingMinimumIntervals = 4
+    public var recordingMinimumIntervals = 4
     
     /// Amount of time (in INTERVALS) to average when deciding to stop recording
-    private let recordingAveragingIntervals = 15
+    public var recordingAveragingIntervals = 15
     
     /// Relative signal strength (in Db) to detect triggers versus average recording level
-    private let fallTriggerDb = 10.0
+    public var fallTriggerDb = 10.0
     
     /// Number of triggers to end recording
-    private let fallTriggerIntervals = 2
+    public var fallTriggerIntervals = 2
     
     /// Recording sample rate (in Hz)
-    private let savingSamplesPerSecond = 22050
+    public var savingSamplesPerSecond = 22050
     
     /// Location of the recorded file
     fileprivate lazy var recordedFileURL: URL = {
