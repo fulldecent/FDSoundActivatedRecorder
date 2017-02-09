@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/1.0.6...master)
+## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/2.0.0...master)
+
+#### Added
+- Exposed recording parameters
+- Added by [William Entriken](https://github.com/fulldecent) in regards to issue
+    request [#17](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/17).
 
 #### Fixed
 - Fix .gitignore and remove built files
