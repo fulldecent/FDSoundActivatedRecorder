@@ -96,7 +96,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     public var savingSamplesPerSecond = 22050
     
     /// Threashold (in Db) which is considered silence for `microphoneLevel`. Does not affect speech detection, only the `microphoneLevel` value.
-    public var microphoneLevelSilenceThreshold = -85.0
+    public var microphoneLevelSilenceThreshold = -44.0
     
     /// Location of the recorded file
     fileprivate lazy var recordedFileURL: URL = {
