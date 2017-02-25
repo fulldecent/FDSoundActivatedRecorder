@@ -95,6 +95,9 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     /// Recording sample rate (in Hz)
     public var savingSamplesPerSecond = 22050
     
+    /// Threashold (in Db) which is considered silence for `microphoneLevel`. Does not affect speech detection, only the `microphoneLevel` value.
+    public var microphoneLevelSilenceThreshold = -44.0
+    
     /// Location of the recorded file
     fileprivate lazy var recordedFileURL: URL = {
         let file = "recording\(arc4random()).caf"
@@ -250,10 +253,10 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         switch currentLevel {
         case _ where currentLevel > 0:
             microphoneLevel = 1
-        case _ where currentLevel < -85:
+        case _ where currentLevel < microphoneLevelSilenceThreshold:
             microphoneLevel = 0
         default:
-            microphoneLevel = 1 + currentLevel / 85
+            microphoneLevel = 1 + currentLevel / microphoneLevelSilenceThreshold * -1.0
         }
         
         switch status {
