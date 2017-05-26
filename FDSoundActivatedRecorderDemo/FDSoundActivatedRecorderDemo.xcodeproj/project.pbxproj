@@ -110,6 +110,7 @@
 				TargetAttributes = {
 					D9A473221CBC6115001D3A59 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 8Q693ZG5RN;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -252,6 +253,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8Q693ZG5RN;
 				INFOPLIST_FILE = FDSoundActivatedRecorderDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.phor.FDSoundActivatedRecorderDemo.FDSoundActivatedRecorderDemo;
@@ -264,6 +266,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8Q693ZG5RN;
 				INFOPLIST_FILE = FDSoundActivatedRecorderDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.phor.FDSoundActivatedRecorderDemo.FDSoundActivatedRecorderDemo;
