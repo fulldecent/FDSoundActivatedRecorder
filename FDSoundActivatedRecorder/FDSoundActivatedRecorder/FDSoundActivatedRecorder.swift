@@ -167,7 +167,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     /// End the recording and send any processed & saved file to `delegate`
     open func stopAndSaveRecording() {
         self.intervalTimer.invalidate()
-        guard status == .recording else {
+        guard status == .recording || status == .listening else {
             return
         }
         status = .processingRecording
