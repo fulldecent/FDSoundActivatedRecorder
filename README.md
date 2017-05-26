@@ -111,3 +111,10 @@ E  --------                   --------
 * (The exceeding levels are not included in the moving average)
 * When several levels deceed the recent moving average by a threshold, we stop recording
 * (The deceeding levels are not included in the moving average)
+
+Sponsorship
+-----------
+
+`[ YOUR LOGO HERE `]
+
+Please contact github.com@phor.net to discuss adding your company logo above and supporting this project.
