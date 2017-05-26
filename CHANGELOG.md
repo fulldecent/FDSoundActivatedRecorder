@@ -4,15 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/2.0.0...master)
+## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/2.1.1...master)
 
-#### Added
-- Exposed recording parameters
-- Added by [William Entriken](https://github.com/fulldecent) in regards to issue
-    request [#17](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/17).
+---
+
+## [2.1.1](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/2.1.1)
 
 #### Fixed
-- Fix .gitignore and remove built files
+- Fix `stopAndSaveRecording` when in listening mode
+  -  by [sabiland](https://github.com/sabiland) in Regards to Issue
+  [#2](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/22).
 
 ---
 
