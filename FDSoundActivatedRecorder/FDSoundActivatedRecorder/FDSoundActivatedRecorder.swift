@@ -135,7 +135,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     
     /// A log-scale reading between 0.0 (silent) and 1.0 (loud), nil if not recording
     /// TODO: make this optional (KVO needs Objective-C compatible classes, Swift bug)
-    dynamic open var microphoneLevel: Double = 0.0
+    @objc dynamic open var microphoneLevel: Double = 0.0
     
     /// Receiver for status updates
     open weak var delegate: FDSoundActivatedRecorderDelegate?
@@ -193,7 +193,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         
         // Set up the AVMutableAudioMix which does fading
         let avAsset = AVAsset(url: self.audioRecorder.url)
-        let tracks = avAsset.tracks(withMediaType: AVMediaTypeAudio)
+        let tracks = avAsset.tracks(withMediaType: AVMediaType.audio)
         let track = tracks[0]
         let exportAudioMix = AVMutableAudioMix()
         let exportAudioMixInputParameters = AVMutableAudioMixInputParameters(track: track)
@@ -204,7 +204,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         // Configure AVAssetExportSession which sets audio format
         let exportSession = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetAppleM4A)!
         exportSession.outputURL = trimmedAudioFileURL
-        exportSession.outputFileType = AVFileTypeAppleM4A
+        exportSession.outputFileType = AVFileType.m4a
         exportSession.timeRange = exportTimeRange
         exportSession.audioMix = exportAudioMix
         
@@ -241,7 +241,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     }
     
     /// This is a PRIVATE method but it must be public because a selector is used in NSTimer (Swift bug)
-    open func interval() {
+    @objc open func interval() {
         guard self.audioRecorder.isRecording else {
             // Timed out
             self.abort()

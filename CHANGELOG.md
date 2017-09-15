@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/2.1.1...master)
 
+#### Added
+- Swift 4 support
+
 ---
 
 ## [2.1.1](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/2.1.1)
