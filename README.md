@@ -7,10 +7,11 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=fulldecent/FDSoundActivatedRecorder)](http://clayallsopp.github.io/readme-score?url=fulldecent/FDSoundActivatedRecorder)
 
-
 Start recording when the user speaks. All you have to do is tell us when to
 start listening. Then we wait for an audible noise and start recording. This is
 mostly useful for user speech input and the "Start talking now prompt".
+
+**:pizza: Virtual tip jar: https://amazon.com/hz/wishlist/ls/EE78A23EEGQB**
 
 Features
 --------
