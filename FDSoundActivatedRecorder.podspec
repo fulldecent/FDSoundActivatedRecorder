@@ -13,5 +13,6 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/fulldecent'
   s.platform     = :ios, '8.0'
   s.requires_arc = true
+  s.swift_version = '5.0'
   s.source_files = 'FDSoundActivatedRecorder/FDSoundActivatedRecorder/FDSoundActivatedRecorder.swift'
 end

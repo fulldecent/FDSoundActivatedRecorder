@@ -26,25 +26,4 @@ class FDSoundActivatedRecorderTests: XCTestCase {
         let expectedVolume = 0.0
         XCTAssertEqual(recorder.microphoneLevel, expectedVolume)
     }
-    
-    func testStartListeningAvailable() {
-        let recorder = FDSoundActivatedRecorder()
-        XCTAssert(recorder.respondsToSelector(#selector(FDSoundActivatedRecorder.startListening)), "Problem reading property \(#function)")
-    }
-    
-    func testStartRecordingAvailable() {
-        let recorder = FDSoundActivatedRecorder()
-        XCTAssertTrue(recorder.respondsToSelector(#selector(FDSoundActivatedRecorder.startRecording)), "Problem reading property \(#function)")
-    }
-    
-    func testStopAndSaveRecordingAvailable() {
-        let recorder = FDSoundActivatedRecorder()
-        XCTAssertTrue(recorder.respondsToSelector(#selector(FDSoundActivatedRecorder.stopAndSaveRecording)), "Problem reading property \(#function)")
-    }
-    
-    func testAbortAvailable() {
-        let recorder = FDSoundActivatedRecorder()
-        XCTAssertTrue(recorder.respondsToSelector(#selector(FDSoundActivatedRecorder.abort)), "Problem reading property \(#function)")
-    }
-    
 }

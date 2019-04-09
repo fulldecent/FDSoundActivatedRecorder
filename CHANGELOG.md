@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/2.1.1...master)
 
 #### Added
-- Swift 4 support
+- Swift 5 support in regards to issue [#23](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/23).
 
 ---
 
@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file.
 #### Fixed
 - Fix `stopAndSaveRecording` when in listening mode
   -  by [sabiland](https://github.com/sabiland) in Regards to Issue
-  [#2](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/22).
+  [#22](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/22).
 
 ---
 
