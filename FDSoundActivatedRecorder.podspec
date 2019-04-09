@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "FDSoundActivatedRecorder"
-  s.version      = "2.1.1"
+  s.version      = "3.0.0"
   s.summary      = "Start recording when the user speaks"
   s.description  = <<-DESC
                    All you have to do is tell us when to start listening. Then we wait for an audible noise and start recording. This is mostly useful for user speech input and the "Start talking now prompt".
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author       = { "William Entriken" => "github.com@phor.net" }
   s.source       = { :git => "https://github.com/fulldecent/FDSoundActivatedRecorder.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/fulldecent'
-  s.platform     = :ios, '8.0'
+  s.platform     = :ios, '10.3'
   s.requires_arc = true
   s.swift_version = '5.0'
   s.source_files = 'FDSoundActivatedRecorder/FDSoundActivatedRecorder/FDSoundActivatedRecorder.swift'
