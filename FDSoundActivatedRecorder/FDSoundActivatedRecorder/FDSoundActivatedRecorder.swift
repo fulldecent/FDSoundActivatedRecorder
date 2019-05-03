@@ -75,7 +75,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     public var listeningAveragingIntervals = 7
     
     /// Relative signal strength (in dB) to detect triggers versus average listening level
-    public var riseTriggerDb = 13.0
+    public var riseTriggerDb: Float = 13.0
     
     /// Number of triggers to begin recording
     public var riseTriggerIntervals = 2
@@ -86,8 +86,8 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     /// Amount of time (in INTERVALS) to average when deciding to stop recording
     public var recordingAveragingIntervals = 15
     
-    /// Relative signal strength (in Db) to detect triggers versus average recording level
-    public var fallTriggerDb = 10.0
+    /// Relative signal strength (in dB) to detect triggers versus average recording level
+    public var fallTriggerDb: Float = 10.0
     
     /// Number of triggers to end recording
     public var fallTriggerIntervals = 2
@@ -96,7 +96,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     public var savingSamplesPerSecond = 22050
     
     /// Threashold (in Db) which is considered silence for `microphoneLevel`. Does not affect speech detection, only the `microphoneLevel` value.
-    public var microphoneLevelSilenceThreshold = -44.0
+    public var microphoneLevelSilenceThreshold: Float = -44.0
     
     /// Location of the recorded file
     fileprivate lazy var recordedFileURL: URL = {
@@ -126,8 +126,8 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     }()
     
     fileprivate(set) var status = FDSoundActivatedRecorderStatus.inactive
-    fileprivate var listeningIntervals = [Double]()
-    fileprivate var recordingIntervals = [Double]()
+    fileprivate var listeningIntervals = [Float]()
+    fileprivate var recordingIntervals = [Float]()
     fileprivate var triggerCount = 0
     fileprivate var intervalTimer = Timer()
     fileprivate var recordingBeginTime = CMTime()
@@ -135,7 +135,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     
     /// A log-scale reading between 0.0 (silent) and 1.0 (loud), nil if not recording
     /// TODO: make this optional (KVO needs Objective-C compatible classes, Swift bug)
-    @objc dynamic open var microphoneLevel: Double = 0.0
+    @objc dynamic open var microphoneLevel: Float = 0.0
     
     /// Receiver for status updates
     open weak var delegate: FDSoundActivatedRecorderDelegate?
@@ -149,7 +149,15 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         status = .listening
         audioRecorder.stop()
         audioRecorder.record(forDuration: timeoutSeconds)
-        intervalTimer = Timer.scheduledTimer(timeInterval: intervalSeconds, target: self, selector: #selector(FDSoundActivatedRecorder.interval), userInfo: nil, repeats: true)
+        intervalTimer = Timer.scheduledTimer(withTimeInterval: intervalSeconds, repeats: true, block: { (Timer) in
+            guard self.audioRecorder.isRecording else {
+                // Timed out
+                self.abort()
+                return
+            }
+            self.audioRecorder.updateMeters()
+            self.interval(currentLevel: self.audioRecorder.averagePower(forChannel: 0))
+        })
         self.listeningIntervals.removeAll()
         self.recordingIntervals.removeAll()
         self.triggerCount = 0
@@ -240,16 +248,8 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         }
     }
     
-    /// This is a PRIVATE method but it must be public because a selector is used in NSTimer (Swift bug)
-    @objc open func interval() {
-        guard self.audioRecorder.isRecording else {
-            // Timed out
-            self.abort()
-            return
-        }
-        
-        self.audioRecorder.updateMeters()
-        let currentLevel = Double(self.audioRecorder.averagePower(forChannel: 0))
+    /// A heartbeat for checking conditions
+    internal func interval(currentLevel: Float) {
         switch currentLevel {
         case _ where currentLevel > 0:
             microphoneLevel = 1
@@ -261,7 +261,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         
         switch status {
         case .recording:
-            let recordingAverageLevel = recordingIntervals.reduce(0.0, +) / Double(recordingIntervals.count)
+            let recordingAverageLevel = recordingIntervals.reduce(0.0, +) / Float(recordingIntervals.count)
             if recordingIntervals.count >= recordingMinimumIntervals && currentLevel <= recordingAverageLevel - fallTriggerDb {
                 triggerCount = triggerCount + 1
             } else {
@@ -275,7 +275,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
                 stopAndSaveRecording()
             }
         case .listening:
-            let listeningAverageLevel = listeningIntervals.reduce(0.0, +) / Double(listeningIntervals.count)
+            let listeningAverageLevel = listeningIntervals.reduce(0.0, +) / Float(listeningIntervals.count)
             if listeningIntervals.count >= listeningMinimumIntervals && currentLevel >= listeningAverageLevel + riseTriggerDb {
                 triggerCount = triggerCount + 1
             } else {
