@@ -149,6 +149,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         status = .listening
         audioRecorder.stop()
         audioRecorder.record(forDuration: timeoutSeconds)
+        intervalTimer.invalidate()
         intervalTimer = Timer.scheduledTimer(withTimeInterval: intervalSeconds, repeats: true, block: { (Timer) in
             guard self.audioRecorder.isRecording else {
                 // Timed out
@@ -174,7 +175,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     
     /// End the recording and send any processed & saved file to `delegate`
     open func stopAndSaveRecording() {
-        self.intervalTimer.invalidate()
+        intervalTimer.invalidate()
         guard status == .recording || status == .listening else {
             return
         }
@@ -238,7 +239,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     
     /// End any recording or listening and discard any recorded file
     open func abort() {
-        self.intervalTimer.invalidate()
+        intervalTimer.invalidate()
         self.audioRecorder.stop()
         if status != .inactive {
             status = .inactive

@@ -106,28 +106,27 @@ class ViewController: UIViewController {
         
         // Handle the dots ////////////////////////////////////////////////////////////////////
         let newSample = UIView();
-        newSample.backgroundColor = totalSamples < recorder.listeningMinimumIntervals ? .yellow : .darkGray
+        newSample.backgroundColor = totalSamples < recorder.listeningMinimumIntervals ? .black : .darkGray
         newSample.center = CGPoint(x: graph.frame.width, y: (1 - valueScaled) * graph.frame.height)
         newSample.bounds.size = CGSize(width: sampleSize, height: sampleSize)
         
         sampleSquares.append(newSample)
         graph.addSubview(newSample)
-        sampleSquares.forEach { (sampleSquare) in
-            let animation = UIViewPropertyAnimator(duration: recorder.intervalSeconds, curve: .linear, animations: {
-                sampleSquare.center.x -= CGFloat(self.sampleSize)
-            })
-            animation.startAnimation()
-        }
-        if let firstSquare = sampleSquares.first {
-            if !graph.frame.contains(firstSquare.frame) {
-                firstSquare.removeFromSuperview()
-                sampleSquares.removeFirst()
-            }
-        }
         
-        // Handle listening min max avg ////////////////////////////////////////////////////////////////
+        // Handle listening threshold dot ////////////////////////////////////////////////////////////////
         if recorder.status == .listening {
             let listeningAverageLevel = listeningIntervals.reduce(0.0, +) / Float(listeningIntervals.count)
+            if listeningIntervals.count >= recorder.listeningMinimumIntervals {
+                let threshold = Float(listeningAverageLevel + recorder.riseTriggerDb)
+                let valueScaled = CGFloat((threshold - recorder.microphoneLevelSilenceThreshold) / -recorder.microphoneLevelSilenceThreshold)
+                let newSample = UIView();
+                newSample.backgroundColor = .orange
+                newSample.center = CGPoint(x: graph.frame.width, y: (1 - valueScaled) * graph.frame.height)
+                newSample.bounds.size = CGSize(width: sampleSize, height: sampleSize)
+                sampleSquares.append(newSample)
+                graph.addSubview(newSample)
+            }
+            
             if listeningIntervals.count >= recorder.listeningMinimumIntervals && currentLevel >= listeningAverageLevel + recorder.riseTriggerDb {
                 triggerCount += 1
                 newSample.backgroundColor = .red
@@ -196,7 +195,17 @@ class ViewController: UIViewController {
 
         }
    
-        
+
+        sampleSquares.forEach { (sampleSquare) in
+            let animation = UIViewPropertyAnimator(duration: recorder.intervalSeconds, curve: .linear, animations: {
+                sampleSquare.center.x -= CGFloat(self.sampleSize)
+            })
+            animation.startAnimation()
+        }
+        while let square = sampleSquares.first, !graph!.frame.contains(square.frame) {
+            square.removeFromSuperview()
+            sampleSquares.removeFirst()
+        }
         
         totalSamples += 1
     }
