@@ -77,7 +77,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     /// Relative signal strength (in dB) to detect triggers versus average listening level
     public var riseTriggerDb: Float = 13.0
     
-    /// Number of triggers to begin recording
+    /// Number of consecutive triggers to begin recording
     public var riseTriggerIntervals = 2
     
     /// Minimum amount of time (in INTERVALS) to record
@@ -89,7 +89,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     /// Relative signal strength (in dB) to detect triggers versus average recording level
     public var fallTriggerDb: Float = 10.0
     
-    /// Number of triggers to end recording
+    /// Number of consecutive triggers to end recording
     public var fallTriggerIntervals = 2
     
     /// Recording sample rate (in Hz)
@@ -126,9 +126,9 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     }()
     
     fileprivate(set) var status = FDSoundActivatedRecorderStatus.inactive
-    fileprivate var listeningIntervals = [Float]()
-    fileprivate var recordingIntervals = [Float]()
-    fileprivate var triggerCount = 0
+    internal var triggerCount = 0
+    internal var triggerLevel: Float? = nil
+    internal var averagingIntervals = [Float]()
     fileprivate var intervalTimer = Timer()
     fileprivate var recordingBeginTime = CMTime()
     fileprivate var recordingEndTime = CMTime()
@@ -159,16 +159,18 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             self.audioRecorder.updateMeters()
             self.interval(currentLevel: self.audioRecorder.averagePower(forChannel: 0))
         })
-        self.listeningIntervals.removeAll()
-        self.recordingIntervals.removeAll()
-        self.triggerCount = 0
+        averagingIntervals.removeAll()
+        triggerCount = 0
+        triggerLevel = nil
     }
     
     /// Go back in time and start recording `riseTriggerIntervals` ago
     open func startRecording() {
         status = .recording
         delegate?.soundActivatedRecorderDidStartRecording(self)
+        averagingIntervals.removeAll()
         triggerCount = 0
+        triggerLevel = nil
         let timeSamples = max(0.0, audioRecorder.currentTime - Double(intervalSeconds) * Double(riseTriggerIntervals)) * Double(savingSamplesPerSecond)
         recordingBeginTime = CMTimeMake(value: Int64(timeSamples), timescale: Int32(savingSamplesPerSecond))
     }
@@ -262,32 +264,36 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         
         switch status {
         case .recording:
-            let recordingAverageLevel = recordingIntervals.reduce(0.0, +) / Float(recordingIntervals.count)
-            if recordingIntervals.count >= recordingMinimumIntervals && currentLevel <= recordingAverageLevel - fallTriggerDb {
-                triggerCount = triggerCount + 1
+            if averagingIntervals.count >= recordingMinimumIntervals {
+                triggerLevel = averagingIntervals.reduce(0.0, +) / Float(averagingIntervals.count) - fallTriggerDb
+            }
+            if let triggerLevel = triggerLevel, currentLevel <= triggerLevel {
+                triggerCount += 1
+                if triggerCount >= fallTriggerIntervals {
+                    stopAndSaveRecording()
+                }
             } else {
                 triggerCount = 0
-                recordingIntervals.append(currentLevel)
-                if recordingIntervals.count > recordingAveragingIntervals {
-                    recordingIntervals.remove(at: 0)
+                averagingIntervals.append(currentLevel)
+                if averagingIntervals.count > recordingAveragingIntervals {
+                    averagingIntervals.removeFirst()
                 }
-            }
-            if triggerCount >= fallTriggerIntervals {
-                stopAndSaveRecording()
             }
         case .listening:
-            let listeningAverageLevel = listeningIntervals.reduce(0.0, +) / Float(listeningIntervals.count)
-            if listeningIntervals.count >= listeningMinimumIntervals && currentLevel >= listeningAverageLevel + riseTriggerDb {
-                triggerCount = triggerCount + 1
+            if averagingIntervals.count >= listeningMinimumIntervals {
+                triggerLevel = averagingIntervals.reduce(0.0, +) / Float(averagingIntervals.count) + riseTriggerDb
+            }
+            if let triggerLevel = triggerLevel, currentLevel >= triggerLevel {
+                triggerCount += 1
+                if triggerCount >= fallTriggerIntervals {
+                    startRecording()
+                }
             } else {
                 triggerCount = 0
-                listeningIntervals.append(currentLevel)
-                if listeningIntervals.count > listeningAveragingIntervals {
-                    listeningIntervals.remove(at: 0)
+                averagingIntervals.append(currentLevel)
+                if averagingIntervals.count > listeningAveragingIntervals {
+                    averagingIntervals.removeFirst()
                 }
-            }
-            if triggerCount >= riseTriggerIntervals {
-                startRecording()
             }
         default:
             break
