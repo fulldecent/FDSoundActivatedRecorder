@@ -75,9 +75,9 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     public var listeningAveragingIntervals = 7
     
     /// Relative signal strength (in dB) to detect triggers versus average listening level
-    public var riseTriggerDb = 13.0
+    public var riseTriggerDb: Float = 13.0
     
-    /// Number of triggers to begin recording
+    /// Number of consecutive triggers to begin recording
     public var riseTriggerIntervals = 2
     
     /// Minimum amount of time (in INTERVALS) to record
@@ -86,17 +86,17 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     /// Amount of time (in INTERVALS) to average when deciding to stop recording
     public var recordingAveragingIntervals = 15
     
-    /// Relative signal strength (in Db) to detect triggers versus average recording level
-    public var fallTriggerDb = 10.0
+    /// Relative signal strength (in dB) to detect triggers versus average recording level
+    public var fallTriggerDb: Float = 10.0
     
-    /// Number of triggers to end recording
+    /// Number of consecutive triggers to end recording
     public var fallTriggerIntervals = 2
     
     /// Recording sample rate (in Hz)
     public var savingSamplesPerSecond = 22050
     
     /// Threashold (in Db) which is considered silence for `microphoneLevel`. Does not affect speech detection, only the `microphoneLevel` value.
-    public var microphoneLevelSilenceThreshold = -44.0
+    public var microphoneLevelSilenceThreshold: Float = -44.0
     
     /// Location of the recorded file
     fileprivate lazy var recordedFileURL: URL = {
@@ -126,16 +126,16 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     }()
     
     fileprivate(set) var status = FDSoundActivatedRecorderStatus.inactive
-    fileprivate var listeningIntervals = [Double]()
-    fileprivate var recordingIntervals = [Double]()
-    fileprivate var triggerCount = 0
+    internal var triggerCount = 0
+    internal var triggerLevel: Float? = nil
+    internal var averagingIntervals = [Float]()
     fileprivate var intervalTimer = Timer()
     fileprivate var recordingBeginTime = CMTime()
     fileprivate var recordingEndTime = CMTime()
     
     /// A log-scale reading between 0.0 (silent) and 1.0 (loud), nil if not recording
     /// TODO: make this optional (KVO needs Objective-C compatible classes, Swift bug)
-    @objc dynamic open var microphoneLevel: Double = 0.0
+    @objc dynamic open var microphoneLevel: Float = 0.0
     
     /// Receiver for status updates
     open weak var delegate: FDSoundActivatedRecorderDelegate?
@@ -149,24 +149,35 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         status = .listening
         audioRecorder.stop()
         audioRecorder.record(forDuration: timeoutSeconds)
-        intervalTimer = Timer.scheduledTimer(timeInterval: intervalSeconds, target: self, selector: #selector(FDSoundActivatedRecorder.interval), userInfo: nil, repeats: true)
-        self.listeningIntervals.removeAll()
-        self.recordingIntervals.removeAll()
-        self.triggerCount = 0
+        intervalTimer.invalidate()
+        intervalTimer = Timer.scheduledTimer(withTimeInterval: intervalSeconds, repeats: true, block: { (Timer) in
+            guard self.audioRecorder.isRecording else {
+                // Timed out
+                self.abort()
+                return
+            }
+            self.audioRecorder.updateMeters()
+            self.interval(currentLevel: self.audioRecorder.averagePower(forChannel: 0))
+        })
+        averagingIntervals.removeAll()
+        triggerCount = 0
+        triggerLevel = nil
     }
     
     /// Go back in time and start recording `riseTriggerIntervals` ago
     open func startRecording() {
         status = .recording
         delegate?.soundActivatedRecorderDidStartRecording(self)
+        averagingIntervals.removeAll()
         triggerCount = 0
+        triggerLevel = nil
         let timeSamples = max(0.0, audioRecorder.currentTime - Double(intervalSeconds) * Double(riseTriggerIntervals)) * Double(savingSamplesPerSecond)
         recordingBeginTime = CMTimeMake(value: Int64(timeSamples), timescale: Int32(savingSamplesPerSecond))
     }
     
     /// End the recording and send any processed & saved file to `delegate`
     open func stopAndSaveRecording() {
-        self.intervalTimer.invalidate()
+        intervalTimer.invalidate()
         guard status == .recording || status == .listening else {
             return
         }
@@ -230,7 +241,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     
     /// End any recording or listening and discard any recorded file
     open func abort() {
-        self.intervalTimer.invalidate()
+        intervalTimer.invalidate()
         self.audioRecorder.stop()
         if status != .inactive {
             status = .inactive
@@ -240,16 +251,8 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         }
     }
     
-    /// This is a PRIVATE method but it must be public because a selector is used in NSTimer (Swift bug)
-    @objc open func interval() {
-        guard self.audioRecorder.isRecording else {
-            // Timed out
-            self.abort()
-            return
-        }
-        
-        self.audioRecorder.updateMeters()
-        let currentLevel = Double(self.audioRecorder.averagePower(forChannel: 0))
+    /// A heartbeat for checking conditions
+    internal func interval(currentLevel: Float) {
         switch currentLevel {
         case _ where currentLevel > 0:
             microphoneLevel = 1
@@ -261,32 +264,36 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         
         switch status {
         case .recording:
-            let recordingAverageLevel = recordingIntervals.reduce(0.0, +) / Double(recordingIntervals.count)
-            if recordingIntervals.count >= recordingMinimumIntervals && currentLevel <= recordingAverageLevel - fallTriggerDb {
-                triggerCount = triggerCount + 1
+            if averagingIntervals.count >= recordingMinimumIntervals {
+                triggerLevel = averagingIntervals.reduce(0.0, +) / Float(averagingIntervals.count) - fallTriggerDb
+            }
+            if let triggerLevel = triggerLevel, currentLevel <= triggerLevel {
+                triggerCount += 1
+                if triggerCount >= fallTriggerIntervals {
+                    stopAndSaveRecording()
+                }
             } else {
                 triggerCount = 0
-                recordingIntervals.append(currentLevel)
-                if recordingIntervals.count > recordingAveragingIntervals {
-                    recordingIntervals.remove(at: 0)
+                averagingIntervals.append(currentLevel)
+                if averagingIntervals.count > recordingAveragingIntervals {
+                    averagingIntervals.removeFirst()
                 }
-            }
-            if triggerCount >= fallTriggerIntervals {
-                stopAndSaveRecording()
             }
         case .listening:
-            let listeningAverageLevel = listeningIntervals.reduce(0.0, +) / Double(listeningIntervals.count)
-            if listeningIntervals.count >= listeningMinimumIntervals && currentLevel >= listeningAverageLevel + riseTriggerDb {
-                triggerCount = triggerCount + 1
+            if averagingIntervals.count >= listeningMinimumIntervals {
+                triggerLevel = averagingIntervals.reduce(0.0, +) / Float(averagingIntervals.count) + riseTriggerDb
+            }
+            if let triggerLevel = triggerLevel, currentLevel >= triggerLevel {
+                triggerCount += 1
+                if triggerCount >= fallTriggerIntervals {
+                    startRecording()
+                }
             } else {
                 triggerCount = 0
-                listeningIntervals.append(currentLevel)
-                if listeningIntervals.count > listeningAveragingIntervals {
-                    listeningIntervals.remove(at: 0)
+                averagingIntervals.append(currentLevel)
+                if averagingIntervals.count > listeningAveragingIntervals {
+                    averagingIntervals.removeFirst()
                 }
-            }
-            if triggerCount >= riseTriggerIntervals {
-                startRecording()
             }
         default:
             break
