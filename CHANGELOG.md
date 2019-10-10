@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/3.1.0...master)
+## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/3.1.1...master)
+
+---
+
+## [3.1.1](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/3.0.0)
+
+#### Fixed
+- Make it actually work with Swift Package Manager
 
 ---
 
