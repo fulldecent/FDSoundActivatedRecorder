@@ -6,7 +6,7 @@ let package = Package(
 )
 
 let package = Package(
-    name: "FDSoundActivatedRecorder"
+    name: "FDSoundActivatedRecorder",
     platforms: [.iOS(.v10)],
     products: [
         .library(name: "FDSoundActivatedRecorder", targets: ["FDSoundActivatedRecorder"])
