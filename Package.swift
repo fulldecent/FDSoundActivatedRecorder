@@ -10,13 +10,13 @@ let package = Package(
     targets: [
         .target(
             name: "FDSoundActivatedRecorder",
-            path: "FDSoundActivatedRecorder",
+            path: "FDSoundActivatedRecorder/FDSoundActivatedRecorder",
             exclude: ["FDSoundActivatedRecorderDemo"]
         ),
         .testTarget(
             name: "FDSoundActivatedRecorderTests",
             dependencies: ["FDSoundActivatedRecorder"],
-            path: "FDSoundActivatedRecorderTests",
+            path: "FDSoundActivatedRecorder/FDSoundActivatedRecorderTests",
             exclude:  ["FDSoundActivatedRecorderDemo"]
         )
     ]
