@@ -2,10 +2,6 @@
 import PackageDescription
 
 let package = Package(
-  name: "FDSoundActivatedRecorder"
-)
-
-let package = Package(
     name: "FDSoundActivatedRecorder",
     platforms: [.iOS(.v10)],
     products: [
