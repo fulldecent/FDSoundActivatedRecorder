@@ -5,19 +5,19 @@ let package = Package(
     name: "FDSoundActivatedRecorder",
     platforms: [.iOS(.v10)],
     products: [
-        .library(name: "FDSoundActivatedRecorder", targets: ["FDSoundActivatedRecorder"])
+        .library(
+            name: "FDSoundActivatedRecorder",
+            targets: ["FDSoundActivatedRecorder"]
+        )
     ],
     targets: [
         .target(
             name: "FDSoundActivatedRecorder",
-            path: "FDSoundActivatedRecorder/FDSoundActivatedRecorder",
-            exclude: ["FDSoundActivatedRecorderDemo"]
+            dependencies: []
         ),
         .testTarget(
             name: "FDSoundActivatedRecorderTests",
-            dependencies: ["FDSoundActivatedRecorder"],
-            path: "FDSoundActivatedRecorder/FDSoundActivatedRecorderTests",
-            exclude:  ["FDSoundActivatedRecorderDemo"]
+            dependencies: ["FDSoundActivatedRecorder"]
         )
     ]
 )

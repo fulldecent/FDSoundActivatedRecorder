@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '10.3'
   s.requires_arc = true
   s.swift_version = '5.0'
-  s.source_files = 'FDSoundActivatedRecorder/FDSoundActivatedRecorder/FDSoundActivatedRecorder.swift'
+  s.source_files = 'Sources/FDSoundActivatedRecorder/*.swift'
 end

@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D916CF3B1F6C52A000807AFD /* FDSoundActivatedRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D916CF3C1F6C52A000807AFD /* FDSoundActivatedRecorder.framework */; };
+		C419704423847B6F0070EA3C /* FDSoundActivatedRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = C419704323847B6F0070EA3C /* FDSoundActivatedRecorder */; };
 		D9A473271CBC6115001D3A59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A473261CBC6115001D3A59 /* AppDelegate.swift */; };
 		D9A473291CBC6115001D3A59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A473281CBC6115001D3A59 /* ViewController.swift */; };
 		D9A4732E1CBC6115001D3A59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9A4732D1CBC6115001D3A59 /* Assets.xcassets */; };
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D916CF3B1F6C52A000807AFD /* FDSoundActivatedRecorder.framework in Frameworks */,
+				C419704423847B6F0070EA3C /* FDSoundActivatedRecorder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +62,7 @@
 		D9A4731A1CBC6115001D3A59 = {
 			isa = PBXGroup;
 			children = (
-				D9A473251CBC6115001D3A59 /* FDSoundActivatedRecorderDemo */,
+				D9A473251CBC6115001D3A59 /* Sources */,
 				D9A473241CBC6115001D3A59 /* Products */,
 				D916CF3A1F6C52A000807AFD /* Frameworks */,
 			);
@@ -76,7 +76,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D9A473251CBC6115001D3A59 /* FDSoundActivatedRecorderDemo */ = {
+		D9A473251CBC6115001D3A59 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				D9A473261CBC6115001D3A59 /* AppDelegate.swift */,
@@ -86,7 +86,7 @@
 				D9A4732D1CBC6115001D3A59 /* Assets.xcassets */,
 				D9A473321CBC6115001D3A59 /* Info.plist */,
 			);
-			path = FDSoundActivatedRecorderDemo;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -106,6 +106,9 @@
 			dependencies = (
 			);
 			name = FDSoundActivatedRecorderDemo;
+			packageProductDependencies = (
+				C419704323847B6F0070EA3C /* FDSoundActivatedRecorder */,
+			);
 			productName = FDSoundActivatedRecorderDemo;
 			productReference = D9A473231CBC6115001D3A59 /* FDSoundActivatedRecorderDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -127,7 +130,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D9A4731E1CBC6115001D3A59 /* Build configuration list for PBXProject "FDSoundActivatedRecorderDemo" */;
+			buildConfigurationList = D9A4731E1CBC6115001D3A59 /* Build configuration list for PBXProject "iOS Example" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -273,7 +276,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -285,7 +289,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8Q693ZG5RN;
 				INFOPLIST_FILE = FDSoundActivatedRecorderDemo/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.phor.FDSoundActivatedRecorderDemo.FDSoundActivatedRecorderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -298,7 +305,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8Q693ZG5RN;
 				INFOPLIST_FILE = FDSoundActivatedRecorderDemo/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.phor.FDSoundActivatedRecorderDemo.FDSoundActivatedRecorderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -308,7 +318,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D9A4731E1CBC6115001D3A59 /* Build configuration list for PBXProject "FDSoundActivatedRecorderDemo" */ = {
+		D9A4731E1CBC6115001D3A59 /* Build configuration list for PBXProject "iOS Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D9A473331CBC6115001D3A59 /* Debug */,
@@ -327,6 +337,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C419704323847B6F0070EA3C /* FDSoundActivatedRecorder */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FDSoundActivatedRecorder;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D9A4731B1CBC6115001D3A59 /* Project object */;
 }
