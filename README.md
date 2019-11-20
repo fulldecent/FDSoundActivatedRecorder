@@ -20,6 +20,24 @@ Features
 -   Sound stops recording when the user is done talking
 -   Works with ARC and iOS 5+
 
+## Installation
+
+Add this to your project using Swift Package Manager. In Xcode that is simply: File > Swift Packages > Add Package Dependency... and you're done. Alternative installations options are shown below for legacy projects.
+
+### CocoaPods
+
+If you are already using [CocoaPods](http://cocoapods.org), just add 'FDSoundActivatedRecorder' to your `Podfile` then run `pod install`.
+
+### Carthage
+
+If you are already using [Carthage](https://github.com/Carthage/Carthage), just add to your `Cartfile`:
+
+```ogdl
+github "fulldecent/FDSoundActivatedRecorder" ~> 0.1
+```
+
+Then run `carthage update` to build the framework and drag the built `FDSoundActivatedRecorder`.framework into your Xcode project.
+
 Usage
 -----
 
