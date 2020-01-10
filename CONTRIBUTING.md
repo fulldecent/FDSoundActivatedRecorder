@@ -5,7 +5,7 @@ All contributors are welcome. Please use issues and pull requests to contribute 
 ## Release process
 
 1. Confirm the build is passing in Travis
-   1. This automatically checks the pod file is building
+   1. This automatically checks that the pod file is building
 2. Create a release commit, see [prior releases](https://github.com/fulldecent/FDSoundActivatedRecorder/releases) for an example
    1. Update the change log to label the latest improvements under the new version name
    2. Update the podspec version number

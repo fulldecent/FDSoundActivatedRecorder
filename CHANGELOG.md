@@ -33,7 +33,7 @@ All notable changes to this project will be documented in this file.
 
 #### Fixed
 - Fix `stopAndSaveRecording` when in listening mode
-  -  by [sabiland](https://github.com/sabiland) in Regards to Issue
+  -  by [sabiland](https://github.com/sabiland) in regards to issue
   [#22](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/22).
 
 ---
@@ -52,19 +52,19 @@ Released on 2016-06-27.
 
 #### Added
 - Complete API documentation
-  - Added by [William Entriken](https://github.com/fulldecent) in Regards to Issue
+  - Added by [William Entriken](https://github.com/fulldecent) in regards to issue
   [#9](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/9).
-- Swift Package Masager support
-  - Added by [William Entriken](https://github.com/fulldecent) in Regards to Issue
+- Swift Package Manager support
+  - Added by [William Entriken](https://github.com/fulldecent) in regards to issue
   [#8](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/8).
 - Scoring for readme
-  - Added by [William Entriken](https://github.com/fulldecent) in Regards to Issue
+  - Added by [William Entriken](https://github.com/fulldecent) in regards to issue
   [#10](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/10).
 - Documentation for release process
-  - Added by [William Entriken](https://github.com/fulldecent) in Regards to Issue
+  - Added by [William Entriken](https://github.com/fulldecent) in regards to issue
   [#13](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/13).
 - Change Log
-  - Added by [William Entriken](https://github.com/fulldecent) in Regards to Issue
+  - Added by [William Entriken](https://github.com/fulldecent) in regards to issue
   [#11](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/11).
 
 ---
@@ -75,7 +75,7 @@ Released on 2016-02-14.
 #### Added
 
 - Fixes issue with fall triggering. Updates algorithm for multi-syllabic utterances
-  -  by [William Entriken](https://github.com/fulldecent) in Regards to Issue
+  -  by [William Entriken](https://github.com/fulldecent) in regards to issue
   [#7](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/7).
 
 ---
@@ -86,7 +86,7 @@ Released on 2016-02-14.
 #### Added
 
 - Carthage support
-  -  by [William Entriken](https://github.com/fulldecent) in Regards to Issue
+  -  by [William Entriken](https://github.com/fulldecent) in regards to issue
   [#6](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/6).
 
 ---

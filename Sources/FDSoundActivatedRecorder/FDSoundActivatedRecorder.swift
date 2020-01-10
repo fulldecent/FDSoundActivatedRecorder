@@ -86,7 +86,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     /// Amount of time (in INTERVALS) to average when deciding to stop recording
     public var recordingAveragingIntervals = 15
     
-    /// Relative signal strength (in dB) to detect triggers versus average recording level
+    /// Relative signal strength (in Db) to detect triggers versus average recording level
     public var fallTriggerDb: Float = 10.0
     
     /// Number of consecutive triggers to end recording
@@ -95,7 +95,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
     /// Recording sample rate (in Hz)
     public var savingSamplesPerSecond = 22050
     
-    /// Threashold (in Db) which is considered silence for `microphoneLevel`. Does not affect speech detection, only the `microphoneLevel` value.
+    /// Threshold (in Db) which is considered silence for `microphoneLevel`. Does not affect speech detection, only the `microphoneLevel` value.
     public var microphoneLevelSilenceThreshold: Float = -44.0
     
     /// Location of the recorded file
@@ -175,7 +175,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         recordingBeginTime = CMTimeMake(value: Int64(timeSamples), timescale: Int32(savingSamplesPerSecond))
     }
     
-    /// End the recording and send any processed & saved file to `delegate`
+    /// End the recording and send any processed & saved files to `delegate`
     open func stopAndSaveRecording() {
         intervalTimer.invalidate()
         guard status == .recording || status == .listening else {
@@ -228,8 +228,8 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
                     self.delegate?.soundActivatedRecorderDidFinishRecording(self, andSaved: trimmedAudioFileURL)
                 case .failed:
                     // a failure may happen because of an event out of your control
-                    // for example, an interruption like a phone call comming in
-                    // make sure and handle this case appropriately
+                    // for example, an interruption like a phone call coming in
+                    // make sure to handle this case appropriately
                     // FIXME: add another delegate method for failing with exportSession.error
                     self.delegate?.soundActivatedRecorderDidAbort(self)
                 default:
@@ -239,7 +239,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
         }
     }
     
-    /// End any recording or listening and discard any recorded file
+    /// End any recording or listening and discard any recorded files
     open func abort() {
         intervalTimer.invalidate()
         self.audioRecorder.stop()

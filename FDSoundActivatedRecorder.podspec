@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version      = "3.1.0"
   s.summary      = "Start recording when the user speaks"
   s.description  = <<-DESC
-                   All you have to do is tell us when to start listening. Then we wait for an audible noise and start recording. This is mostly useful for user speech input and the "Start talking now prompt".
+                   All you have to do is tell us when to start listening. Then we wait for an audible noise and start recording. This is mostly useful for user speech input and the "Start talking now" prompt.
                    DESC
   s.homepage     = "https://github.com/fulldecent/FDSoundActivatedRecorder"
   s.screenshots  = "http://i.imgur.com/XD9QBjG.png"

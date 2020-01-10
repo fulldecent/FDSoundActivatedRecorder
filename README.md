@@ -9,7 +9,7 @@
 
 Start recording when the user speaks. All you have to do is tell us when to
 start listening. Then we wait for an audible noise and start recording. This is
-mostly useful for user speech input and the "Start talking now prompt".
+mostly useful for user speech input and the "Start talking now" prompt.
 
 **:pizza: Virtual tip jar: https://amazon.com/hz/wishlist/ls/EE78A23EEGQB**
 
@@ -22,7 +22,7 @@ Features
 
 ## Installation
 
-Add this to your project using Swift Package Manager. In Xcode that is simply: File > Swift Packages > Add Package Dependency... and you're done. Alternative installations options are shown below for legacy projects.
+Add this to your project using Swift Package Manager. In Xcode that is simply: File > Swift Packages > Add Package Dependency... and you're done. Alternative installation options are shown below for legacy projects.
 
 ### CocoaPods
 
@@ -36,7 +36,7 @@ If you are already using [Carthage](https://github.com/Carthage/Carthage), just 
 github "fulldecent/FDSoundActivatedRecorder" ~> 0.1
 ```
 
-Then run `carthage update` to build the framework and drag the built `FDSoundActivatedRecorder`.framework into your Xcode project.
+Then run `carthage update` to build the framework and drag the built `FDSoundActivatedRecorder`framework into your Xcode project.
 
 Usage
 -----
@@ -98,7 +98,7 @@ class FDSoundActivatedRecorder : NSObject {
     /// End the recording and send any processed & saved file to `delegate`
     func stopAndSaveRecording()
 
-    /// End any recording or listening and discard any recorded file
+    /// End any recording or listening and discard any recorded files
     func abort()
 
     /// This is a PRIVATE method but it must be public because a selector is used in NSTimer (Swift bug)
