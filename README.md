@@ -60,6 +60,22 @@ If your app is in the app store, I would much appreciate if you could add your
 app to https://www.cocoacontrols.com/controls/fdsoundactivatedrecorder under
 "Apps using this control" and "I Use This Control".
 
+### Regular Recorder
+
+If you want to use it as a regular recorder, without the ability to of trimming the audio.
+
+1. Begin listening:
+```
+self.recorder.startListening()
+```
+2. Begin recording:
+```
+self.recorder.startRecording()
+```
+3. Finally, you can stop recording using the following method:
+```
+self.recorder.stopAndSaveRecording()
+```
 Full API
 --------
 
