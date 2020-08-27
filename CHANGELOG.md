@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/3.1.1...master)
+## [Master](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/3.2.0...master)
+
+---
+
+## [3.2.0](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/3.2.0)
 
 #### Added
 - Updated example to use SwiftPT, issue [#25](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/30).
@@ -12,14 +16,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [3.1.1](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/3.0.0)
+## [3.1.1](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/3.1.1)
 
 #### Fixed
 - Make it actually work with Swift Package Manager
 
 ---
 
-## [3.1.0](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/3.0.0)
+## [3.1.0](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/3.1.0)
 
 #### Added
 - Introspection for activations, issue [#25](https://github.com/fulldecent/FDSoundActivatedRecorder/issues/25).
