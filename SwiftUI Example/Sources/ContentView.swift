@@ -3,7 +3,7 @@
 //  FDSoundActivatedRecorder-SwiftUI
 //
 //  Created by Engin BULANIK on 25.08.2020.
-//  Copyright © 2020 Engin BULANIK. All rights reserved.
+//  Copyright © 2020 William Entriken. All rights reserved.
 //
 
 import SwiftUI
@@ -14,65 +14,66 @@ struct ContentView: View {
     var body: some View {
         
         VStack(spacing: 10){
-            Text("Note: Default time-out value is 10 seconds")
+            Text("Recording times out after 10 seconds")
             Button(action: self.viewModel.pressedStartListening) {
-                // How the button looks like
                 Text("startListening")
                     .frame(width: viewModel.menuWidth)
                     .padding()
-                    .background(Color(.lightGray))
-                    .cornerRadius(40)
+                    .background(Color.yellow)
+                    .foregroundColor(Color.white)
+                    .cornerRadius(20)
             }
             
             Button(action: self.viewModel.pressedStartRecording) {
-                // How the button looks like
                 Text("startRecording")
                     .frame(width: viewModel.menuWidth)
                     .padding()
-                    .background(Color(.lightGray))
-                    .cornerRadius(40)
+                    .background(Color.red)
+                    .foregroundColor(Color.white)
+                    .cornerRadius(20)
             }
             
             Button(action: self.viewModel.pressedStopAndSaveRecording) {
-                // How the button looks like
                 Text("stopAndSaveRecording")
                     .frame(width: viewModel.menuWidth)
                     .padding()
-                    .background(Color(.lightGray))
-                    .cornerRadius(40)
+                    .background(Color.blue)
+                    .foregroundColor(Color.white)
+                    .cornerRadius(20)
             }
             
             Button(action: self.viewModel.pressedAbort) {
-                // How the button looks like
                 Text("abort")
                     .frame(width: viewModel.menuWidth)
                     .padding()
-                    .background(Color(.lightGray))
-                    .cornerRadius(40)
+                    .background(Color.black)
+                    .foregroundColor(Color.white)
+                    .cornerRadius(20)
             }
             
-            //Mic level
-            Text("Microphone Level")
+            // Mic level
+            Text("Microphone level")
             Rectangle()
                 .fill(Color.gray)
-                .frame(width: self.viewModel.menuWidth, height: 5)
+                .frame(width: self.viewModel.menuWidth, height: 10)
                 .overlay(Rectangle()
                     .fill(Color.red)
-                    .frame(width: self.viewModel.progressBarLevel * self.viewModel.menuWidth, height: 5))
+                    .frame(width: self.viewModel.progressBarLevel * self.viewModel.menuWidth, height: 10))
                 .frame(height: 20)
             
             Text(viewModel.microphoneLevel)
             
             Button(action: {
                 // What to perform
-                self.viewModel.pressedPlayBack()
+                self.viewModel.pressedPlay()
             }) {
                 // How the button looks like
-                Text("playBack")
+                Text("play")
                     .frame(width: viewModel.menuWidth)
                     .padding()
-                    .background(Color(.lightGray))
-                    .cornerRadius(40)
+                    .background(Color.green)
+                    .foregroundColor(Color.white)
+                    .cornerRadius(20)
             }.disabled(self.viewModel.savedURL == nil)
             
             // Graph Animation
@@ -88,7 +89,6 @@ struct ContentView: View {
                             Spacer()
                                 .frame(height: sample.value * geometry.size.height)
                         }.overlay(
-                            
                             VStack {
                                 Spacer()
                                 Rectangle()
@@ -97,14 +97,11 @@ struct ContentView: View {
                                 Spacer()
                                     .frame(height: sample.thresholdValue * geometry.size.height)
                             }
-                            
                         )
                     }
                 }
             }
-            
         }
-        
     }
 }
 

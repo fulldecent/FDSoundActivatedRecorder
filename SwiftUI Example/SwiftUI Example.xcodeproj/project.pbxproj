@@ -11,7 +11,6 @@
 		BDE36E1124F6D70700F068ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE36E1024F6D70700F068ED /* AppDelegate.swift */; };
 		BDE36E1324F6D70700F068ED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE36E1224F6D70700F068ED /* SceneDelegate.swift */; };
 		BDE36E1724F6D70900F068ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDE36E1624F6D70900F068ED /* Assets.xcassets */; };
-		BDE36E1A24F6D70900F068ED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDE36E1924F6D70900F068ED /* Preview Assets.xcassets */; };
 		BDE36E1D24F6D70900F068ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDE36E1B24F6D70900F068ED /* LaunchScreen.storyboard */; };
 		BDE36E2524F6D74F00F068ED /* FDSoundActivatedRecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE36E2424F6D74F00F068ED /* FDSoundActivatedRecorderViewModel.swift */; };
 		BDE36E2D24F6D85500F068ED /* FDSoundActivatedRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = BDE36E2C24F6D85500F068ED /* FDSoundActivatedRecorder */; };
@@ -23,11 +22,11 @@
 		BDE36E1024F6D70700F068ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDE36E1224F6D70700F068ED /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BDE36E1624F6D70900F068ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BDE36E1924F6D70900F068ED /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BDE36E1C24F6D70900F068ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BDE36E1E24F6D70900F068ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDE36E2424F6D74F00F068ED /* FDSoundActivatedRecorderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FDSoundActivatedRecorderViewModel.swift; sourceTree = "<group>"; };
 		BDE36E2A24F6D81C00F068ED /* FDSoundActivatedRecorder */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FDSoundActivatedRecorder; path = ..; sourceTree = "<group>"; };
+		D9FE19AD24F7294A00DC2067 /* SwiftUI Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SwiftUI Example.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +44,7 @@
 		BDE36E0424F6D70700F068ED = {
 			isa = PBXGroup;
 			children = (
-				BDE36E0F24F6D70700F068ED /* SwiftUI Example */,
+				BDE36E0F24F6D70700F068ED /* Sources */,
 				BDE36E0E24F6D70700F068ED /* Products */,
 				BDE36E2B24F6D85500F068ED /* Frameworks */,
 				BDE36E2A24F6D81C00F068ED /* FDSoundActivatedRecorder */,
@@ -60,9 +59,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BDE36E0F24F6D70700F068ED /* SwiftUI Example */ = {
+		BDE36E0F24F6D70700F068ED /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D9FE19AD24F7294A00DC2067 /* SwiftUI Example.entitlements */,
 				BDE36E1024F6D70700F068ED /* AppDelegate.swift */,
 				BDE36E1224F6D70700F068ED /* SceneDelegate.swift */,
 				BD6F9AD924F6E0AB00264135 /* ContentView.swift */,
@@ -70,17 +70,8 @@
 				BDE36E1624F6D70900F068ED /* Assets.xcassets */,
 				BDE36E1B24F6D70900F068ED /* LaunchScreen.storyboard */,
 				BDE36E1E24F6D70900F068ED /* Info.plist */,
-				BDE36E1824F6D70900F068ED /* Preview Content */,
 			);
-			path = "SwiftUI Example";
-			sourceTree = "<group>";
-		};
-		BDE36E1824F6D70900F068ED /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				BDE36E1924F6D70900F068ED /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		BDE36E2B24F6D85500F068ED /* Frameworks */ = {
@@ -152,7 +143,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDE36E1D24F6D70900F068ED /* LaunchScreen.storyboard in Resources */,
-				BDE36E1A24F6D70900F068ED /* Preview Assets.xcassets in Resources */,
 				BDE36E1724F6D70900F068ED /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,9 +293,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "SwiftUI Example/SwiftUI Example.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI Example/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8Q693ZG5RN;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "SwiftUI Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -314,6 +307,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.phor.FDSoundActivatedRecorder.SwiftUI-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -323,9 +319,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "SwiftUI Example/SwiftUI Example.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI Example/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8Q693ZG5RN;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "SwiftUI Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -334,6 +333,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.phor.FDSoundActivatedRecorder.SwiftUI-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -3,7 +3,7 @@
 //  FDSoundActivatedRecorderViewModel-SwiftUI
 //
 //  Created by Engin BULANIK on 25.08.2020.
-//  Copyright © 2020 Engin BULANIK. All rights reserved.
+//  Copyright © 2020 William Entriken. All rights reserved.
 //
 import SwiftUI
 import Foundation
@@ -53,7 +53,7 @@ class FDSoundActivatedRecorderViewModel: NSObject, ObservableObject, FDSoundActi
         recorder.abort()
     }
     
-    func pressedPlayBack() {
+    func pressedPlay() {
         player = AVPlayer(url: savedURL!)
         player.play()
     }
@@ -121,32 +121,32 @@ class FDSoundActivatedRecorderViewModel: NSObject, ObservableObject, FDSoundActi
         
         switch recorder.status {
         case .listening:
-            sampleColor = .black
+            sampleColor = .yellow
             if recorder.averagingIntervals.count < recorder.listeningMinimumIntervals {
-                sampleColor = Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4))
+                sampleColor = .gray
             }
             if let triggerLevel = recorder.triggerLevel, currentLevel >= triggerLevel {
-                sampleColor = .white
+                sampleColor = .purple
             }
         case .recording:
             sampleColor = .red
             if recorder.averagingIntervals.count < recorder.recordingMinimumIntervals {
-                sampleColor = Color(UIColor(red: 1, green: 0, blue: 0, alpha: 0.4))
+                sampleColor = .orange
             }
             if let triggerLevel = recorder.triggerLevel, currentLevel <= triggerLevel {
-                sampleColor = .white
+                sampleColor = .blue
             }
         default:
             sampleColor = .green
         }
 
         var triggerLevelValueScaled: CGFloat = 0
-        var triggerLevelColor: Color = Color(UIColor(red: 1, green: 1, blue: 1, alpha: 0.0))
+        var triggerLevelColor: Color = .clear
         
         // Create threshold dot //////////////////////////////////////////////////
         if let triggerLevel = recorder.triggerLevel {
             triggerLevelValueScaled = CGFloat(1 - triggerLevel / recorder.microphoneLevelSilenceThreshold)
-            triggerLevelColor = Color(UIColor(red: 1, green: 1, blue: 0, alpha: 0.4))
+            triggerLevelColor = .black
         }
         
         // Create the sample dot ///////////////////////////////////////////////

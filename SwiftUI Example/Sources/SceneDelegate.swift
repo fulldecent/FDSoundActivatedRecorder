@@ -3,7 +3,7 @@
 //  SwiftUI Example
 //
 //  Created by Engin BULANIK on 26.08.2020.
-//  Copyright © 2020 Engin BULANIK. All rights reserved.
+//  Copyright © 2020 William Entriken. All rights reserved.
 //
 
 import UIKit
@@ -63,3 +63,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+
+struct SceneDelegate_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}
