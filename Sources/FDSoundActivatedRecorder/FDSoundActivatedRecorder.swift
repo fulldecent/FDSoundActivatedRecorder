@@ -285,7 +285,7 @@ open class FDSoundActivatedRecorder: NSObject, AVAudioRecorderDelegate {
             }
             if let triggerLevel = triggerLevel, currentLevel >= triggerLevel {
                 triggerCount += 1
-                if triggerCount >= fallTriggerIntervals {
+                if triggerCount >= riseTriggerIntervals {
                     startRecording()
                 }
             } else {
