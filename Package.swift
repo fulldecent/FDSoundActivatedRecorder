@@ -1,9 +1,9 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.5.0
 import PackageDescription
 
 let package = Package(
     name: "FDSoundActivatedRecorder",
-    platforms: [.iOS(.v10)],
+    platforms: [.iOS(.v12)],
     products: [
         .library(
             name: "FDSoundActivatedRecorder",
