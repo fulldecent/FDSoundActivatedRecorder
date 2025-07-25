@@ -1,129 +1,67 @@
 # FDSoundActivatedRecorder
 
-[![CI Status](http://img.shields.io/travis/fulldecent/FDSoundActivatedRecorder.svg?style=flat)](https://travis-ci.org/fulldecent/FDSoundActivatedRecorder)
-[![Version](https://img.shields.io/cocoapods/v/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDSoundActivatedRecorder)
-[![License](https://img.shields.io/cocoapods/l/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDSoundActivatedRecorder)
-[![Platform](https://img.shields.io/cocoapods/p/FDSoundActivatedRecorder.svg?style=flat)](http://cocoadocs.org/docsets/FDSoundActivatedRecorder)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=fulldecent/FDSoundActivatedRecorder)](http://clayallsopp.github.io/readme-score?url=fulldecent/FDSoundActivatedRecorder)
+![GitHub tag (latest SemVer)](https://github.com/fulldecent/FDSoundActivatedRecorder/actions/workflows/ci.yml/badge.svg?branch=main)
 
-Start recording when the user speaks. All you have to do is tell us when to
-start listening. Then we wait for an audible noise and start recording. This is
-mostly useful for user speech input and the "Start talking now" prompt.
+```plain
+ * V
+ * O                 /-----------\
+ * L                /             \
+ * U          Rise /               \ Fall
+ * M              /                 \
+ * E  -----------/                   \-----------
+ *
+ *       Quiet   |   Recorded file   |   Quiet
+```
 
-**:pizza: Virtual tip jar: https://amazon.com/hz/wishlist/ls/EE78A23EEGQB**
+## Example
 
-Features
---------
-
--   You can start recording when sound is detected, or immediately
--   Sound stops recording when the user is done talking
--   Works with ARC and iOS 5+
+To run the example project, clone this repo, and open Example.xcworkspace from the iOS Example directory.
 
 ## Installation
 
-Add this to your project using Swift Package Manager. In Xcode that is simply: File > Swift Packages > Add Package Dependency... and you're done. Alternative installation options are shown below for legacy projects.
+Add this to your project using Swift Package Manager. In Xcode that is simply: File > Swift Packages > Add Package Dependency... and you're done.
 
-### CocoaPods
+## License
 
-If you are already using [CocoaPods](http://cocoapods.org), just add 'FDSoundActivatedRecorder' to your `Podfile` then run `pod install`.
+FDSoundActivatedRecorder is available under the MIT license. See [the LICENSE file](LICENSE) for more information.
 
-### Carthage
+## Features
 
-If you are already using [Carthage](https://github.com/Carthage/Carthage), just add to your `Cartfile`:
+- You can start recording when sound is detected
+- Sound stops recording when the user is done talking
+- Works with ARC and iOS 16+
 
-```ogdl
-github "fulldecent/FDSoundActivatedRecorder" ~> 0.1
-```
-
-Then run `carthage update` to build the framework and drag the built `FDSoundActivatedRecorder`framework into your Xcode project.
-
-Usage
------
-
-First, install by adding `pod 'FDSoundActivatedRecorder', '~> 1.0.0'` to your
-Podfile.
+## Usage
 
 Import the project with:
 
-    import FDSoundActivatedRecorder
+```swift
+import FDSoundActivatedRecorder
+```
 
 Then begin listening with:
 
-    self.recorder = FDSoundActivatedRecorder()
-    self.recorder.delegate = self
-    self.recorder.startListening()
+```swift
+self.recorder = FDSoundActivatedRecorder()
+self.recorder.delegate = self
+self.recorder.startListening()
+```
 
 A full implementation example is provided in this project.
 
-If your app is in the app store, I would much appreciate if you could add your
-app to https://www.cocoacontrols.com/controls/fdsoundactivatedrecorder under
-"Apps using this control" and "I Use This Control".
+### Regular recorder
 
-### Regular Recorder
+If you want to use it as a regular recorder, without trimming the audio, you can tweak the `Configuration` to achieve that.
 
-If you want to use it as a regular recorder, without the ability to of trimming the audio.
-
-1. Begin listening:
-```
-self.recorder.startListening()
-```
-2. Begin recording:
-```
-self.recorder.startRecording()
-```
-3. Finally, you can stop recording using the following method:
-```
-self.recorder.stopAndSaveRecording()
-```
-Full API
---------
+### Full API
 
 The full API, from
-[FDSoundActivatedRecorder.swift](<https://github.com/fulldecent/FDSoundActivatedRecorder/blob/master/FDSoundActivatedRecorder.swift>)
+[FDSoundActivatedRecorder.swift](https://github.com/fulldecent/FDSoundActivatedRecorder/blob/main/Sources/FDSoundActivatedRecorder/FDSoundActivatedRecorder.swift)
 is copied below:
 
-````
-@objc protocol FDSoundActivatedRecorderDelegate {
-    /// A recording was triggered or manually started
-    func soundActivatedRecorderDidStartRecording(recorder: FDSoundActivatedRecorder)
+// FIXME: PASTE HERE
 
-    /// No recording has started or been completed after listening for `TOTAL_TIMEOUT_SECONDS`
-    func soundActivatedRecorderDidTimeOut(recorder: FDSoundActivatedRecorder)
-
-    /// The recording and/or listening ended and no recording was captured
-    func soundActivatedRecorderDidAbort(recorder: FDSoundActivatedRecorder)
-
-    /// A recording was successfully captured
-    func soundActivatedRecorderDidFinishRecording(recorder: FDSoundActivatedRecorder, andSaved file: NSURL)
-}
-
-class FDSoundActivatedRecorder : NSObject {
-    /// A log-scale reading between 0.0 (silent) and 1.0 (loud), nil if not recording
-    dynamic var microphoneLevel: Double
-
-    /// Receiver for status updates
-    weak var delegate: FDSoundActivatedRecorderDelegate?
-
-    /// Listen and start recording when triggered
-    func startListening()
-
-    /// Go back in time and start recording `RISE_TRIGGER_INTERVALS` ago
-    func startRecording()
-
-    /// End the recording and send any processed & saved file to `delegate`
-    func stopAndSaveRecording()
-
-    /// End any recording or listening and discard any recorded files
-    func abort()
-
-    /// This is a PRIVATE method but it must be public because a selector is used in NSTimer (Swift bug)
-    func interval()
-}
-````
-
-Technical discussion
---------------------
+## Technical discussion
 
 This library is tuned for human speech detection using Apple retail iOS devices
 in a quiet or noisy environement. You are welcome to tune the audio detection
@@ -131,25 +69,19 @@ constants of this program for any special needs you may have. Following is a
 technical description of how the algorithm works from
 `FDSoundActivatedRecorder.swift`.
 
-````
-V               Recording
-O             /-----------\
-L            /             \Fall
-U           /Rise           \
-M          /                 \
-E  --------                   --------
-   Listening                  Done
-````
+```plain
+ * V
+ * O                 /-----------\
+ * L                /             \
+ * U          Rise /               \ Fall
+ * M              /                 \
+ * E  -----------/                   \-----------
+ *
+ *       Quiet   |   Recorded file   |   Quiet
+```
 
-* We listen and save audio levels every `INTERVAL`
-* When several levels exceed the recent moving average by a threshold, we record
-* (The exceeding levels are not included in the moving average)
-* When several levels deceed the recent moving average by a threshold, we stop recording
-* (The deceeding levels are not included in the moving average)
-
-Sponsorship
------------
-
-`[ YOUR LOGO HERE `]
-
-Please contact github.com@phor.net to discuss adding your company logo above and supporting this project.
+- We listen and save audio levels every `INTERVAL`
+- When several levels exceed the recent moving average by a threshold, we record
+- (The exceeding levels are not included in the moving average)
+- When several levels deceed the recent moving average by a threshold, we stop recording
+- (The deceeding levels are not included in the moving average)

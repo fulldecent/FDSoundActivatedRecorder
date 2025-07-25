@@ -2,19 +2,18 @@
 
 All contributors are welcome. Please use issues and pull requests to contribute to the project. And update [CHANGELOG.md](CHANGELOG.md) when committing.
 
+## Making a change
+
+When you commit a change, please add a note to [CHANGELOG.md](CHANGELOG.md).
+
 ## Release process
 
-1. Confirm the build is passing in Travis
-   1. This automatically checks that the pod file is building
-2. Create a release commit, see [prior releases](https://github.com/fulldecent/FDSoundActivatedRecorder/releases) for an example
-   1. Update the change log to label the latest improvements under the new version name
-   2. Update the podspec version number
-3. Tag the release in GitHub
-   1. Create the release commit
-   2. Create the release with notes from the change log
-3. Push the podspec to cocoapods
-   1. `pod trunk push`
-4. Create Carthage binaries
-   1. `carthage build --no-skip-current`
-   2. `carthage archive FDSoundActivatedRecorder`
-   3. Add to the GitHub release
+1. Confirm the build is [passing in GitHub Actions](https://github.com/fulldecent/FDSoundActivatedRecorder/actions)
+2. Push a release commit
+   1. Create a new Main section at the top
+   2. Rename the old Main section like:
+          ## [1.0.5](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/1.0.5)
+          Released on 2019-10-15.
+3. Create a GitHub release
+   1. Tag the release (like `1.0.5`)
+   2. Paste notes from [CHANGELOG.md](CHANGELOG.md)
