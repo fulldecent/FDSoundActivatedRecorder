@@ -7,18 +7,12 @@
 //
 
 import XCTest
+
 @testable import FDSoundActivatedRecorder
 
 class FDSoundActivatedRecorderTests: XCTestCase {
-    func testPropertyMicrophoneLevel() {
+    func testDefaultTimeoutSeconds() {
         let recorder = FDSoundActivatedRecorder()
-        let expectedVolume: Float = 0.0
-        XCTAssertEqual(recorder.microphoneLevel, expectedVolume, accuracy: 0.001)
+        XCTAssertEqual(recorder.config.timeoutSeconds, 10)
     }
-}
-
-extension FDSoundActivatedRecorderTests {
-    static var allTests = [
-        ("testPropertyMicrophoneLevel", testPropertyMicrophoneLevel)
-    ]
 }
