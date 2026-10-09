@@ -7,6 +7,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Main](https://github.com/fulldecent/FDSoundActivatedRecorder/compare/4.0.0...main)
 
+### Changed
+
+- Package tests use Swift Testing.
+- The example project keeps the Example app target and drops ExampleTests and ExampleUITests.
+- README records the Swift 6 Module Template commit this repository follows, `38d7ba4`.
+
 ---
 
 ## [4.0.0](https://github.com/fulldecent/FDSoundActivatedRecorder/releases/tag/4.0.0)
