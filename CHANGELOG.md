@@ -11,7 +11,8 @@ All notable changes to this project will be documented in this file.
 
 - Package tests use Swift Testing.
 - The example project keeps the Example app target and drops ExampleTests and ExampleUITests.
-- README records the Swift 6 Module Template commit this repository follows, `38d7ba4`.
+- README records the Swift 6 Module Template release this repository follows, 16.5.0.
+- Continuous integration runs on the GitHub-hosted `xcode-27` image and checks out with `actions/checkout@v7`.
 
 ---
 
