@@ -1,6 +1,6 @@
 # FDSoundActivatedRecorder
 
-![Test](https://github.com/fulldecent/FDSoundActivatedRecorder/actions/workflows/ci.yml/badge.svg?branch=main)
+[![Test](https://github.com/fulldecent/FDSoundActivatedRecorder/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fulldecent/FDSoundActivatedRecorder/actions/workflows/ci.yml) [![Lint](https://github.com/fulldecent/FDSoundActivatedRecorder/actions/workflows/lint.yml/badge.svg)](https://github.com/fulldecent/FDSoundActivatedRecorder/actions/workflows/lint.yml)
 
 ```plain
  * V
@@ -111,3 +111,4 @@ technical description of how the algorithm works from
    - [`.github/workflows/build-test.yml`](https://github.com/fulldecent/swift6-module-template/blob/v16.5.0/.github/workflows/build-test.yml) builds a release-mode Linux library and [`.github/workflows/release.yml`](https://github.com/fulldecent/swift6-module-template/blob/v16.5.0/.github/workflows/release.yml) publishes it with Release Please. This repository keeps the changelog and the release steps in [CONTRIBUTING.md](CONTRIBUTING.md). Swift Package Manager installs this library from the git tag.
    - The template also builds Linux, Windows, Wasm, and Embedded Swift. Those jobs do not build this package. Soundness in that workflow expects a Swift 6.4 image. This repository does not run it.
    - [`.gitignore`](.gitignore) already inlines [Swift.gitignore](https://github.com/github/gitignore/blob/main/Swift.gitignore), which is the ignore file that release vendors.
+   - [lint.yml](.github/workflows/lint.yml), [.editorconfig](.editorconfig), [.markdownlint.json](.markdownlint.json), [.markdownlintignore](.markdownlintignore), and [.prettierignore](.prettierignore) follow [swift6-module-template](https://github.com/fulldecent/swift6-module-template) release [16.6.0](https://github.com/fulldecent/swift6-module-template/releases/tag/v16.6.0). Prettier checks files that are not Markdown. markdownlint checks Markdown. The commands are in that template's Development section.
